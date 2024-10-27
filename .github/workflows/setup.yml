@@ -18,18 +18,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4 
       # Downloads all dependencies if they don't exist
       # Runs commands to install xschem, then the PDK files, then open xschem
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-          
-      - uses: actions/checkout@v4 
+      
       - name: Install Xschem and Dependencies 
         run: |
-              sudo apt-get update
-              sudo apt-get install -y libtk8.6 libtk-dev
-              pip install -r requirements.txt
+              sudo apt update
+              sudo apt install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex
               
