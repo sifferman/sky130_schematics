@@ -26,9 +26,8 @@ jobs:
         run: |
               sudo apt update
               sudo apt install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex
-              git submodule add https://github.com/efabless/caravel_mpw-one.git
-              export CARAVEL_ROOT=$GITHUB_WORKSPACE/caravel_mpw-one
               git submodule add https://github.com/google/skywater-pdk.git
               cd skywater-pdk
-              sudo ./configure --with-sky130-source=~$GITHUB_WORKSPACE/skywater-pdk/libraries --with-sky130-local-path=~/cad/pdks
+              SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
+              make timing
               
