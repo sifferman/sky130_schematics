@@ -31,5 +31,5 @@ jobs:
       - name: Create 
         run: |
               git submodule add https://github.com/google/skywater-pdk.git
-              cd /skywater-pdk
+              cd ~/skywater-pdk
               sudo ./configure --with-sky130-source=~/sky130_fd_io/skywater-pdk/libraries --with-sky130-local-path=~/cad/pdks
