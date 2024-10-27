@@ -26,4 +26,6 @@ jobs:
         run: |
               sudo apt update
               sudo apt install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex
+              git submodule add https://github.com/efabless/caravel_mpw-one.git
+              export CARAVEL_ROOT=$GITHUB_WORKSPACE/caravel_mpw-one
               
