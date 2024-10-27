@@ -30,7 +30,5 @@ jobs:
         
       - name: Create 
         run: |
-              git clone https://github.com/efabless/caravel_mpw-one.git
-              export CARAVEL_ROOT=~/caravel_mpw-one
-              git clone https://github.com/google/skywater-pdk.git
-              echo Hello World!
+              git submodule add https://github.com/google/skywater-pdk.git
+              sudo ./configure --with-sky130-source=~/sky130_fd_io/skywater-pdk/libraries --with-sky130-local-path=~/cad/pdks
