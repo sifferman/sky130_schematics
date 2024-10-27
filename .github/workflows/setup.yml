@@ -28,16 +28,9 @@ jobs:
 
       # Runs commands to install xschem, then the PDK files, then open xschem
         
-      - name: Create Caravel
-        working-directory: ~/
+      - name: Create 
         run: |
               git clone https://github.com/efabless/caravel_mpw-one.git
               export CARAVEL_ROOT=~/caravel_mpw-one
-      - name: Creating Skywater
-        working-directory: ~/
-        run: |
               git clone https://github.com/google/skywater-pdk.git
-      - name: Creating PDKs
-        working-directory: ~/skywater-pdk
-        run: |
               echo Hello World!
