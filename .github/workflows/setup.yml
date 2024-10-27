@@ -32,4 +32,4 @@ jobs:
         run: |
               git submodule add https://github.com/google/skywater-pdk.git
               cd ~/work/sky130_schematics/sky130_schematics/skywater-pdk
-              sudo ./configure --with-sky130-source=~/sky130_fd_io/skywater-pdk/libraries --with-sky130-local-path=~/cad/pdks
+              sudo ./configure --with-sky130-source=~/work/sky130_schematics/sky130_schematics/skywater-pdk/libraries --with-sky130-local-path=~/cad/pdks
