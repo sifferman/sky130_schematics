@@ -26,4 +26,5 @@ jobs:
         
       - name: Install Xschem and Dependencies 
         run: |
+              sudo apt update
               sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libtk-dev libx11-dev flex
