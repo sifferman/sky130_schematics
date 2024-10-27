@@ -21,15 +21,9 @@ jobs:
       - uses: actions/checkout@v4
 
       # Downloads all dependencies if they don't exist
-      - uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: tk8.6-dev libxpm-dev tcl8.6-dev libtk-dev libx11-dev flex
-          version: 1.0
 
       # Runs commands to install xschem, then the PDK files, then open xschem
         
-      - name: Create 
+      - name: Install Xschem and Dependencies 
         run: |
-              git submodule add https://github.com/google/skywater-pdk.git
-              cd skywater-pdk
-              sudo ./configure --with-sky130-source=~/sky130_schematics/skywater-pdk/libraries --with-sky130-local-path=~/cad/pdks
+              sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libtk-dev libx11-dev flex iy
