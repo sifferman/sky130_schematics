@@ -28,7 +28,7 @@ jobs:
               sudo rm -rf "$AGENT_TOOLSDIRECTORY"
               sudo apt update
               sudo apt install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
-              git clone git://opencircuitdesign.com/magic
+              git submodule add git://opencircuitdesign.com/magic
               git submodule add https://git.code.sf.net/p/ngspice/ngspice ngspice_git
               cd ngspice_git
               mkdir release
@@ -41,7 +41,7 @@ jobs:
               cd ..
               git submodule add git://opencircuitdesign.com/open_pdks
               cd open_pdks
-              ./configure --enable-sky130-pdk
+              ./configure --enable-sky130-pdk --enable-sram-sky130
               
 
               
