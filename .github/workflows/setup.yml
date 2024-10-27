@@ -28,6 +28,10 @@ jobs:
               sudo rm -rf "$AGENT_TOOLSDIRECTORY"
               sudo apt update
               sudo apt install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
+              git submodule add https://github.com/google/skywater-pdk.git
+              cd skywater-pdk
+              SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
+              make timing
               git submodule add git://opencircuitdesign.com/magic
               git submodule add https://git.code.sf.net/p/ngspice/ngspice ngspice_git
               cd ngspice_git
