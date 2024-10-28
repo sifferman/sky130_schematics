@@ -52,10 +52,14 @@ jobs:
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
               cd open_pdks
-              sudo ./configure --with-sky130-source=~/skywater-pdk/libraries --with-sky130-local-path=~/cad/pdks
+              sudo ./configure --prefix=~/
               make
               sudo make install
               make veryclean
+      - name: Verifying PDK files
+        run: |
+              test -d ~/pdk
+              echo $?
               
 
               
