@@ -25,6 +25,13 @@ jobs:
               sudo rm -rf "$AGENT_TOOLSDIRECTORY"
               sudo apt-get update
               sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
+      - name: Install magic
+        run: | 
+              git clone --depth 1 https://github.com/RTimothyEdwards/magic
+              cd magic
+              ./configure
+              make database/database.h
+              make -j$(nproc)
       - name: Install skywater-pdk Libraries     
         run: |
               cd $GITHUB_WORKSPACE
@@ -32,14 +39,6 @@ jobs:
               cd skywater-pdk
               SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
               make timing
-      - name: Install magic
-        run: |
-              cd $GITHUB_WORKSPACE
-              git clone --depth 1 https://github.com/RTimothyEdwards/magic
-              cd magic
-              ./configure
-              make database/database.h
-              make -j$(nproc)
       - name: Install ngspice
         run: |
               cd $GITHUB_WORKSPACE
