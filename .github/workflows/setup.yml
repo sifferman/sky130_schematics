@@ -41,7 +41,17 @@ jobs:
               cd release
               ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-osdi
               make
-
+      - name: Install skywater-pdk Libraries     
+        run: |
+              git clone --depth 1 https://github.com/google/skywater-pdk.git
+              cd skywater-pdk
+              SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
+              make timing
+      - name: Generate PDK files
+        run: |
+              git submodule add git://opencircuitdesign.com/open_pdks
+              cd open_pdks
+              sudo ./configure --with-sky130-source=~/skywater-pdk/libraries --with-sky130-local-path=~/cad/pdks
               
 
               
