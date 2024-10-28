@@ -52,14 +52,10 @@ jobs:
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
               cd open_pdks
-              sudo ./configure --prefix=~/
+              sudo ./configure
               make
               sudo make install
               make veryclean
-      - name: Verifying PDK files
-        run: |
-              test -d ~/pdk
-              echo $?
               
 
               
