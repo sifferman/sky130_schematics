@@ -50,7 +50,7 @@ jobs:
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
               cd open_pdks
-              ./configure --prefix=~/open_pdks
+              ./configure --prefix=${{ github.workspace }}
               make
               sudo make install
               make veryclean
