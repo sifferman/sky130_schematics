@@ -42,9 +42,10 @@ jobs:
               ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-osdi
               make
               cd ..
+              cd ..
       - name: Install skywater-pdk Libraries     
         run: |
-              git clone --depth 1 https://github.com/google/skywater-pdk.git
+              git submodule add https://github.com/google/skywater-pdk.git
               cd skywater-pdk
               SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
               make timing
