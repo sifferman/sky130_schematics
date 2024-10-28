@@ -32,16 +32,8 @@ jobs:
               ./configure
               make database/database.h
               make -j$(nproc)
-      - name: Install skywater-pdk Libraries     
-        run: |
-              cd $GITHUB_WORKSPACE
-              git clone --depth 1 https://github.com/google/skywater-pdk.git
-              cd skywater-pdk
-              SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
-              make timing
       - name: Install ngspice
         run: |
-              cd $GITHUB_WORKSPACE
               git submodule add git://git.code.sf.net/p/ngspice/ngspice
               cd ngspice
               mkdir release
@@ -49,12 +41,7 @@ jobs:
               cd release
               ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-osdi
               make
-      - name: Generate PDK files
-        run: |
-              cd $GITHUB_WORKSPACE
-              git submodule add git://opencircuitdesign.com/open_pdks
-              cd open_pdks
-              ./configure --enable-sky130-pdk --enable-sram-sky130
+
               
 
               
