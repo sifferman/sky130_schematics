@@ -27,7 +27,6 @@ jobs:
               sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
       - name: Install ngspice
         run: |
-              cd ..
               git submodule add git://git.code.sf.net/p/ngspice/ngspice
               cd ngspice
               mkdir release
