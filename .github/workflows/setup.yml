@@ -5,9 +5,7 @@ name: Setup
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
 
   workflow_dispatch:
 
@@ -24,22 +22,27 @@ jobs:
         run: |
               sudo rm -rf /usr/share/dotnet
               sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-              sudo apt update
-              sudo apt install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
-              git submodule add https://github.com/google/skywater-pdk.git
+              sudo apt-get update
+              sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
+              cd $GITHUB_WORKSPACE
+              git clone --depth 1 git@github.com:google/skywater-pdk.git
               cd skywater-pdk
               SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
               make timing
-              git submodule add https://github.com/RTimothyEdwards/magic
-              sudo apt-get install magic
-              git submodule add https://git.code.sf.net/p/ngspice/ngspice ngspice_git
-              cd ngspice_git
+              cd $GITHUB_WORKSPACE
+              git clone --depth 1 git@github.com:RTimothyEdwards/magic.git
+              cd magic
+              ./configure
+              make database/database.h
+              make -j$(nproc)
+              cd $GITHUB_WORKSPACE
+              git clone --depth 1 git://git.code.sf.net/p/ngspice/ngspice
+              cd ngspice
               mkdir release
               ./autogen.sh
               cd release
               ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-osdi
               make
-              sudo make install
               cd ..
               cd ..
               git submodule add git://opencircuitdesign.com/open_pdks
