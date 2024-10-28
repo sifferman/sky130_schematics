@@ -13,16 +13,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    # Note: Generate PDK files sent inside repo, this is done just for testing and should be removed before going global
     steps:
       - uses: actions/checkout@v4 
-      # Downloads all dependencies if they don't exist
-      # Runs commands to install xschem, then the PDK files, then open xschem
-      
-      - name: Install Dependencies 
+      - name: Free Memory
         run: |
               sudo rm -rf /usr/share/dotnet
-              sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+              sudo rm -rf "$AGENT_TOOLSDIRECTORY"        
+      - name: Install Dependencies 
+        run: |
               sudo apt-get update
               sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
       - name: Install magic
@@ -47,15 +46,21 @@ jobs:
               git clone https://github.com/google/skywater-pdk.git
               cd skywater-pdk
               SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
-              make timing
       - name: Generate PDK files
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
               cd open_pdks
-              sudo ./configure
+              ./configure --prefix=~/open_pdks
               make
               sudo make install
               make veryclean
+      - name: Verifying PDK files
+        run: |
+              if find . -type d -name "pdk" | grep -q .; then
+                echo "PDK Folder Successfully Generated!"
+              else
+                echo "PDK Folder Not Found."
+              fi
               
 
               
