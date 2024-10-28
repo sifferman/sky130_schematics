@@ -19,14 +19,30 @@ jobs:
       # Downloads all dependencies if they don't exist
       # Runs commands to install xschem, then the PDK files, then open xschem
       
-      - name: Install Xschem and Dependencies 
+      - name: Install Dependencies 
         run: |
               sudo rm -rf /usr/share/dotnet
               sudo rm -rf "$AGENT_TOOLSDIRECTORY"
               sudo apt-get update
               sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
+      - name: Install skywater-pdk Libraries     
+        run: |
+              cd $GITHUB_WORKSPACE
+              git clone --depth 1 https://github.com/google/skywater-pdk.git
+              cd skywater-pdk
+              SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
+              make timing
+      - name: Install magic
+        run: |
+              cd $GITHUB_WORKSPACE
+              git clone --depth 1 https://github.com/RTimothyEdwards/magic
+              cd magic
+              ./configure
+              make database/database.h
+              make -j$(nproc)
       - name: Install ngspice
         run: |
+              cd $GITHUB_WORKSPACE
               git submodule add git://git.code.sf.net/p/ngspice/ngspice
               cd ngspice
               mkdir release
@@ -36,8 +52,7 @@ jobs:
               make
       - name: Generate PDK files
         run: |
-              cd ..
-              cd ..
+              cd $GITHUB_WORKSPACE
               git submodule add git://opencircuitdesign.com/open_pdks
               cd open_pdks
               ./configure --enable-sky130-pdk --enable-sram-sky130
