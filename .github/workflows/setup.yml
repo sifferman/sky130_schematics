@@ -28,14 +28,14 @@ jobs:
       - name: Install skywater-pdk Libraries     
         run: |
               cd $GITHUB_WORKSPACE
-              git clone --depth 1 git@github.com:google/skywater-pdk.git
+              git submodule add git@github.com:google/skywater-pdk.git
               cd skywater-pdk
               SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
               make timing
       - name: Install magic
         run: |
               cd $GITHUB_WORKSPACE
-              git clone --depth 1 git@github.com:RTimothyEdwards/magic.git
+              git submodule add git@github.com:RTimothyEdwards/magic.git
               cd magic
               ./configure
               make database/database.h
@@ -43,7 +43,7 @@ jobs:
       - name: Install ngspice
         run: |
               cd $GITHUB_WORKSPACE
-              git clone --depth 1 git://git.code.sf.net/p/ngspice/ngspice
+              git submodule add git://git.code.sf.net/p/ngspice/ngspice
               cd ngspice
               mkdir release
               ./autogen.sh
@@ -53,7 +53,7 @@ jobs:
       - name: Generate PDK files
         run: |
               cd $GITHUB_WORKSPACE
-              git clone --depth 1 git://opencircuitdesign.com/open_pdks
+              git submodule add git://opencircuitdesign.com/open_pdks
               cd open_pdks
               ./configure --enable-sky130-pdk --enable-sram-sky130
               
