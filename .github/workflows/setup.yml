@@ -5,6 +5,7 @@ name: Setup
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
+    # Temporarily restricted to testing branch, as otherwise concurrent runs happen every push
     branches: [ "open_pdks_testing" ]
   # pull_request:
 
@@ -20,10 +21,13 @@ jobs:
         run: |
               sudo rm -rf /usr/share/dotnet
               sudo rm -rf "$AGENT_TOOLSDIRECTORY"        
+      
       - name: Install Dependencies 
         run: |
               sudo apt-get update
               sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
+
+      # Run fails; magic not found; only sudo apt-get install magic solved it; both necessary?
       - name: Install magic
         run: | 
               git clone --depth 1 https://github.com/RTimothyEdwards/magic
@@ -32,6 +36,7 @@ jobs:
               make database/database.h
               make -j$(nproc)
               sudo apt-get install magic
+      
       - name: Install ngspice
         run: |
               git clone --depth 1 git://git.code.sf.net/p/ngspice/ngspice
@@ -41,11 +46,16 @@ jobs:
               cd release
               ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-osdi
               make
+      
+      # Removed make timing
+        # Unclear is necessary, could be either, requires testing
       - name: Install skywater-pdk Libraries     
         run: |
               git clone https://github.com/google/skywater-pdk.git
               cd skywater-pdk
               SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
+
+      # Unclear if PDK files generated
       - name: Generate PDK files
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
@@ -54,6 +64,8 @@ jobs:
               make
               sudo make install
               make veryclean
+
+      # Cannot find PDK Folder, should've been set to $GITHUB_WORKSPACE, where is it?
       - name: Verifying PDK files
         run: |
               if find . -type d -name "pdk" | grep -q .; then
