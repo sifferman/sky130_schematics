@@ -64,23 +64,12 @@ jobs:
               make
               sudo make install
               make veryclean
-              
-      # xschem top_gpiov2.sch
-      # Run LVS Root to test if pdk files generated 
-      # xschem --script ~/test_run.tcl
-      # Page 164, xschem exit closewindow force
-      # xschem run for 5 sec, check log. If error: exit, else: output cmds to log? 
-      # Run a tcl script that starts the xschem
-        # grep for if symbol not found: exit closewindow force
-        # grep for other stuff
-        # Export log file
-        # Check return code of tcl command?
-        # grep -q "Symbol not found" ~/test_run.log && exit 1
-       - name: BLANK
-         run: |
-               cd 
-              
 
-              
-              
-              
+      - name: Verify Installation
+        run: |
+              git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git
+              xschem --log test.log <<EOF
+              xschem load f sky130_fd_io/top_gpiov2.sch 
+              xschem exit closewindow force
+              EOF
+              grep -q "Symbol not found" test.log && exit 1
