@@ -26,7 +26,15 @@ jobs:
         run: |
               sudo apt-get update
               sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
-
+      
+      - name: Install Xschem
+        run: |
+              git clone --depth 1 https://github.com/StefanSchippers/xschem.git xschem-src
+              cd xschem-src
+              ./configure
+              make
+              sudo make install
+      
       # Run fails; magic not found; only sudo apt-get install magic solved it; both necessary?
         #After get this working properly, find alternative for sudo apt-get install magic
       - name: Install magic
