@@ -78,6 +78,8 @@ jobs:
         run: |
               git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git
               cd sky130_fd_io
+              export PDK=sky130A
+              export PDKPATH=${{ github.workspace }}/open_pdks
               xschem --log test.log <<EOF
               xschem load f sky130_fd_io/top_gpiov2.sch 
               xschem exit closewindow force
