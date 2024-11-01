@@ -60,19 +60,25 @@ jobs:
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
               cd open_pdks
-              ./configure --prefix=${{ github.workspace }}
+              ./configure --prefix=${{ github.workspace }}/open_pdks
               make
               sudo make install
               make veryclean
-
-      # Cannot find PDK Folder, should've been set to $GITHUB_WORKSPACE, where is it?
-      - name: Verifying PDK files
-        run: |
-              if find . -type d -name "pdk" | grep -q .; then
-                echo "PDK Folder Successfully Generated!"
-              else
-                echo "PDK Folder Not Found."
-              fi
+              
+      # xschem top_gpiov2.sch
+      # Run LVS Root to test if pdk files generated 
+      # xschem --script ~/test_run.tcl
+      # Page 164, xschem exit closewindow force
+      # xschem run for 5 sec, check log. If error: exit, else: output cmds to log? 
+      # Run a tcl script that starts the xschem
+        # grep for if symbol not found: exit closewindow force
+        # grep for other stuff
+        # Export log file
+        # Check return code of tcl command?
+        # grep -q "Symbol not found" ~/test_run.log && exit 1
+       - name: BLANK
+         run: |
+               cd 
               
 
               
