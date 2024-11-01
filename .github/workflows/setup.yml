@@ -28,6 +28,7 @@ jobs:
               sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
 
       # Run fails; magic not found; only sudo apt-get install magic solved it; both necessary?
+        #After get this working properly, find alternative for sudo apt-get install magic
       - name: Install magic
         run: | 
               git clone --depth 1 https://github.com/RTimothyEdwards/magic
@@ -68,6 +69,7 @@ jobs:
       - name: Verify Installation
         run: |
               git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git
+              cd sky130_fd_io
               xschem --log test.log <<EOF
               xschem load f sky130_fd_io/top_gpiov2.sch 
               xschem exit closewindow force
