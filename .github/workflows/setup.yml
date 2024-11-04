@@ -24,15 +24,17 @@ jobs:
       - name: Install Dependencies 
         run: |
               sudo apt-get update
-              sudo apt-get install -y tk8.6-dev libxpm-dev tcl8.6-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev
+              sudo apt install python3
+              sudo apt-get install -y tk-dev libxpm-dev tcl-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev m4 tcsh
       
-      - name: Install Xschem
-        run: |
-              git clone --depth 1 https://github.com/StefanSchippers/xschem.git xschem-src
-              cd xschem-src
-              ./configure
-              make
-              sudo make install
+      # Using open_pdk xschem
+      # - name: Install Xschem
+      #   run: |
+      #         git clone --depth 1 https://github.com/StefanSchippers/xschem.git xschem-src
+      #         cd xschem-src
+      #         ./configure
+      #         make
+      #         sudo make install
 
         # Works now, removed these commands, not sure if necessary
         #      make database/database.h
@@ -55,13 +57,22 @@ jobs:
               ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-osdi
               make
 
-
+      - name: Clone PDK Libraries
+        run: |
+              mkdir pdk_lib
+              cd pdk_lib
+              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_pr
+              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_io
+              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hs
+              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd
+              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hvl
+              
       - name: Generate PDK files
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
               cd open_pdks
               echo "$GITHUB_WORKSPACE/open_pdks" >> $GITHUB_PATH
-              ./configure --prefix=${{ github.workspace }}/open_pdks --enable-sky130-pdk --enable-sram-sky130
+              ./configure --prefix=${{ github.workspace }}/open_pdks --enable-sky130-pdk --enable-xschem-sky130 --with-sky130-variants=A --enable-primitive-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_pr --enable-io-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_io --enable-sc-hs-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_sc_hs --enable-sc-hd-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_sc_hd --enable-sc-hvl-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_sc_hvl
               make
               sudo make install
               make veryclean
