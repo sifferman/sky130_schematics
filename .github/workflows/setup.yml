@@ -72,12 +72,11 @@ jobs:
               make
               sudo make install
               make veryclean
-
+      # Always exit 1, idk why. Seems to open properly but I think it doesn't like displaying the GUI, causing exit 1
       - name: Verify Installation
         run: |
               git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git
               cd sky130_fd_io
-              export PDK=sky130A
               export PDKPATH=${{ github.workspace }}/open_pdks
               xschem --log test.log <<EOF
               xschem load f sky130_fd_io/top_gpiov2.sch 
@@ -90,3 +89,24 @@ jobs:
                 echo "No Symbol Errors"
                 exit 0
               fi
+              
+      - name: Install caravel
+        run: |
+              git clone --depth 1 https://github.com/efabless/caravel.git
+              
+      - name: Install netgen
+        run: |
+              git clone --depth 1 https://github.com/RTimothyEdwards/netgen.git
+              cd netgen
+              ./configure
+              make
+              sudo make install
+
+      - name: LVS Setup
+        run: |
+              git clone https://github.com/d-m-bailey/extra_be_checks ${{ github.workspace }}/extra_be_checks
+              export LVS_ROOT=${{ github.workspace }}/extra_be_checks
+              export WORK_ROOT=$PWD/work/top_gpiov2
+              export PDK_ROOT=${{ github.workspace }}/open_pdks/pdk
+              export PDK=sky130A
+              export CARAVEL_ROOT=${{ github.workspace }}/caravel_mpw-one
