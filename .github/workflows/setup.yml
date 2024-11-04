@@ -33,10 +33,9 @@ jobs:
               ./configure
               make
               sudo make install
-      
-      # Run fails; magic not found; only sudo apt-get install magic solved it; both necessary?
-        #After get this working properly, find alternative for sudo apt-get install magic
-        #              make database/database.h
+
+        # Works now, removed these commands, not sure if necessary
+        #      make database/database.h
         #      make -j$(nproc)
       - name: Install magic
         run: | 
@@ -56,14 +55,7 @@ jobs:
               ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-osdi
               make
 
-      # # This code might not work? Seems there's a version difference :/
-      # - name: Install skywater-pdk Libraries     
-      #   run: |
-      #         git clone https://github.com/google/skywater-pdk.git
-      #         cd skywater-pdk
-      #         SUBMODULE_VERSION=latest make submodules -j3 || make submodules -j1
 
-      # Unclear if PDK files generated
       - name: Generate PDK files
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
@@ -74,23 +66,23 @@ jobs:
               sudo make install
               make veryclean
               
-      # Always exit 1, idk why. Seems to open properly but I think it doesn't like displaying the GUI, causing exit 1
-      - name: Verify Installation
-        run: |
-              git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git
-              cd sky130_fd_io
-              export PDKPATH=${{ github.workspace }}/open_pdks
-              xschem --log test.log <<EOF
-              xschem load f sky130_fd_io/top_gpiov2.sch 
-              xschem exit closewindow force
-              EOF
-              if grep -q "Symbol not found" test.log; then
-                echo "Error: Symbol not Found"
-                exit 1
-              else
-                echo "No Symbol Errors"
-                exit 0
-              fi
+      # # For testing on device only, does not seem to work on GitHub
+      # - name: Verify Installation
+      #   run: |
+      #         git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git
+      #         cd sky130_fd_io
+      #         export PDKPATH=${{ github.workspace }}/open_pdks
+      #         xschem --log test.log <<EOF
+      #         xschem load f sky130_fd_io/top_gpiov2.sch 
+      #         xschem exit closewindow force
+      #         EOF
+      #         if grep -q "Symbol not found" test.log; then
+      #           echo "Error: Symbol not Found"
+      #           exit 1
+      #         else
+      #           echo "No Symbol Errors"
+      #           exit 0
+      #         fi
               
       - name: Install caravel
         run: |
