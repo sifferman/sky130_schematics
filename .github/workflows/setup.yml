@@ -14,7 +14,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Note: Generate PDK files sent inside repo, this is done just for testing and should be removed before going global
     steps:
       - uses: actions/checkout@v4 
       - name: Free Memory
@@ -37,14 +36,15 @@ jobs:
       
       # Run fails; magic not found; only sudo apt-get install magic solved it; both necessary?
         #After get this working properly, find alternative for sudo apt-get install magic
+        #              make database/database.h
+        #      make -j$(nproc)
       - name: Install magic
         run: | 
               git clone --depth 1 https://github.com/RTimothyEdwards/magic
               cd magic
               ./configure
-              make database/database.h
-              make -j$(nproc)
-              sudo apt-get install magic
+              make
+              sudo make install
       
       - name: Install ngspice
         run: |
@@ -56,8 +56,6 @@ jobs:
               ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-osdi
               make
       
-      # Removed make timing
-        # Unclear is necessary, could be either, requires testing
       - name: Install skywater-pdk Libraries     
         run: |
               git clone https://github.com/google/skywater-pdk.git
@@ -69,6 +67,7 @@ jobs:
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
               cd open_pdks
+              echo "$GITHUB_WORKSPACE/open_pdks" >> $GITHUB_PATH
               ./configure --prefix=${{ github.workspace }}/open_pdks
               make
               sudo make install
