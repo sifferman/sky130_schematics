@@ -83,4 +83,10 @@ jobs:
               xschem load f sky130_fd_io/top_gpiov2.sch 
               xschem exit closewindow force
               EOF
-              grep -q "Symbol not found" test.log && echo "Error: Symbol not Found" && exit 1
+              if grep -q "Symbol not found" test.log; then
+                echo "Error: Symbol not Found"
+                exit 1
+              else
+                echo "No Symbol Errors"
+                exit 0
+              fi
