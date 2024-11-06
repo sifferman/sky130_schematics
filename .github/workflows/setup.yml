@@ -65,7 +65,7 @@ jobs:
         run: |
               git clone --depth 1 https://github.com/RTimothyEdwards/netgen.git
               cd netgen
-              ./configure --prefix=${{ env.tools }}z/netgen
+              ./configure --prefix=${{ env.tools }}/netgen
               make -j`nproc`
               make install
               echo "${{ env.tools }}/netgen/bin" >> $GITHUB_PATH
