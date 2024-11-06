@@ -1,105 +1,116 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Setup
 
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    # Temporarily restricted to testing branch, as otherwise concurrent runs happen every push
-    branches: [ "open_pdks_testing" ]
   # pull_request:
-
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4 
+      - uses: actions/checkout@v4
       - name: Free Memory
         run: |
               sudo rm -rf /usr/share/dotnet
-              sudo rm -rf "$AGENT_TOOLSDIRECTORY"        
-      
-      - name: Install Dependencies 
+              sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
+      - name: Install Dependencies
         run: |
               sudo apt-get update
-              sudo apt install python3
+              sudo apt-get install -y python3
               sudo apt-get install -y tk-dev libxpm-dev tcl-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev m4 tcsh
-      
+
       - name: Install magic
-        run: | 
+        run: |
               git clone --depth 1 https://github.com/RTimothyEdwards/magic
               cd magic
-              ./configure
-              make
-              sudo make install
-      
+              ./configure --prefix=${TOOLS}/magic
+              make -j`nproc`
+              make install
+              echo "${TOOLS}/magic/bin" >> $GITHUB_PATH
+
       - name: Install ngspice
         run: |
               git clone --depth 1 git://git.code.sf.net/p/ngspice/ngspice
               cd ngspice
-              mkdir release
+              mkdir -p build
               ./autogen.sh
-              cd release
-              ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-osdi
-              make
+              cd build
+              ../configure \
+               --prefix=${TOOLS}/ngspice \
+               --with-x \
+               --enable-xspice \
+               --disable-debug \
+               --enable-cider \
+               --with-readline=yes \
+               --enable-openmp \
+               --enable-osdi
+              make -j`nproc`
+              make install
+              echo "${TOOLS}/ngspice/bin" >> $GITHUB_PATH
 
-      - name: Clone PDK Libraries
+      - name: Install xschem
         run: |
-              mkdir pdk_lib
-              cd pdk_lib
-              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_pr
-              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_io
-              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hs
-              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd
-              git clone --depth 1 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hvl
-              
+              git clone --depth 1 https://github.com/StefanSchippers/xschem.git xschem
+              cd xschem
+              ./configure --prefix=${TOOLS}/xschem
+              make -j`nproc`
+              make install
+              echo "${TOOLS}/xschem/bin" >> $GITHUB_PATH
+
       - name: Generate PDK files
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
               cd open_pdks
-              echo "$GITHUB_WORKSPACE/open_pdks" >> $GITHUB_PATH
-              ./configure --prefix=${{ github.workspace }}/open_pdks --enable-sky130-pdk --enable-xschem-sky130 --with-sky130-variants=A --enable-primitive-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_pr --enable-io-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_io --enable-sc-hs-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_sc_hs --enable-sc-hd-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_sc_hd --enable-sc-hvl-sky130=${{ github.workspace }}/pdk_lib/skywater-pdk-libs-sky130_fd_sc_hvl
-              make
-              sudo make install
+              ./configure \
+               --prefix=${TOOLS}/open_pdks \
+               --enable-sky130-pdk \
+               --with-sky130-variants=A \
+               --enable-primitive-sky130 \
+               --enable-io-sky130 \
+               --disable-sc-hs-sky130 \
+               --disable-sc-ms-sky130 \
+               --disable-sc-ls-sky130 \
+               --disable-sc-lp-sky130 \
+               --enable-sc-hd-sky130 \
+               --disable-sc-hdll-sky130 \
+               --disable-sc-hvl-sky130 \
+               --disable-alpha-sky130 \
+               --enable-xschem-sky130 \
+               --disable-sram-sky130 \
+               --disable-osu-t12-sky130 \
+               --disable-osu-t15-sky130 \
+               --disable-osu-t18-sky130
+              make -j`nproc`
+              make install
               make veryclean
-              
-      # # For testing on device only, does not seem to work on GitHub
-      # - name: Verify Installation
-      #   run: |
-      #         git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git
-      #         cd sky130_fd_io
-      #         export PDKPATH=${{ github.workspace }}/open_pdks
-      #         xschem --log test.log <<EOF
-      #         xschem load f sky130_fd_io/top_gpiov2.sch 
-      #         xschem exit closewindow force
-      #         EOF
-      #         if grep -q "Symbol not found" test.log; then
-      #           echo "Error: Symbol not Found"
-      #           exit 1
-      #         else
-      #           echo "No Symbol Errors"
-      #           exit 0
-      #         fi
-              
-      - name: Install caravel
+
+      - name: Download Caravel
         run: |
               git clone --depth 1 https://github.com/efabless/caravel.git
-              
-      - name: Install netgen
-        run: |
-              git clone --depth 1 https://github.com/RTimothyEdwards/netgen.git
-              cd netgen
-              ./configure
-              make
-              sudo make install
+              make -C caravel gds/chip_io.gds
+              export CARAVEL_ROOT=${{ github.workspace }}/caravel
 
-      - name: LVS Setup
+      - name: Download Backend Layout Check Scripts
         run: |
-              git clone https://github.com/d-m-bailey/extra_be_checks ${{ github.workspace }}/extra_be_checks
-              export LVS_ROOT=${{ github.workspace }}/extra_be_checks
-              export WORK_ROOT=$PWD/work/top_gpiov2
-              export PDK_ROOT=${{ github.workspace }}/open_pdks/pdk
+              git clone --depth 1 https://github.com/d-m-bailey/extra_be_checks.git backend_layout_checks
+              export LVS_ROOT=${{ github.workspace }}/backend_layout_checks
+
+      - name: Verifiy Installation with Mitch Bailey's sky130_io Schematics
+        run: |
+              git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git mitch_bailey_sky130_io_schematics
+              cd mitch_bailey_sky130_io_schematics
+              export WORK_ROOT=${WORKSPACE}/mitch_bailey_sky130_io_schematics/work/top_gpiov2
+              export PDKPATH=${TOOLS}/open_pdks/share/pdk/sky130A
+              export PDK_ROOT=${TOOLS}/open_pdks/share/pdk
               export PDK=sky130A
-              export CARAVEL_ROOT=${{ github.workspace }}/caravel_mpw-one
+              xschem --log test.log <<EOF
+                xschem load top_gpiov2.sch
+                set lvs_netlist 1
+                set netlist_dir [xschem get current_dirname]/simulation
+                xschem netlist
+                xschem exit closewindow force
+              EOF
+              grep "Symbol not found" test.log && exit 1 || echo "No Symbol Errors"
+              $LVS_ROOT/run_full_lvs lvs/top_gpiov2/lvs_config.json
