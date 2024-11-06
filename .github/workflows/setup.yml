@@ -101,7 +101,6 @@ jobs:
         run: |
               git clone --depth 1 https://github.com/efabless/caravel.git
               make -C caravel gds/chip_io.gds
-              export CARAVEL_ROOT=${{ github.workspace }}/caravel
 
       - name: Download Backend Layout Check Scripts
         run: |
@@ -111,6 +110,7 @@ jobs:
         run: |
               git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git mitch_bailey_sky130_io_schematics
               cd mitch_bailey_sky130_io_schematics
+              export CARAVEL_ROOT=${{ github.workspace }}/caravel
               export LVS_ROOT=${{ github.workspace }}/backend_layout_checks
               export WORK_ROOT=${{ github.workspace }}/mitch_bailey_sky130_io_schematics/work/top_gpiov2
               export PDKPATH=${{ env.tools }}/open_pdks/share/pdk/sky130A
