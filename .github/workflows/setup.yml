@@ -7,6 +7,8 @@ on:
 
 jobs:
   build:
+    env:
+      tools: ${{ github.workspace }}/tools
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,16 +23,14 @@ jobs:
               sudo apt-get install -y python3
               sudo apt-get install -y tk-dev libxpm-dev tcl-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev m4 tcsh
 
-      - run: export TOOLS=${{ github.workspace }}/tools
-
       - name: Install magic
         run: |
               git clone --depth 1 https://github.com/RTimothyEdwards/magic
               cd magic
-              ./configure --prefix=${TOOLS}/magic
+              ./configure --prefix=${{ env.tools }}/magic
               make -j`nproc`
               make install
-              echo "${TOOLS}/magic/bin" >> $GITHUB_PATH
+              echo "${{ env.tools }}/magic/bin" >> $GITHUB_PATH
 
       - name: Install ngspice
         run: |
@@ -40,7 +40,7 @@ jobs:
               ./autogen.sh
               cd build
               ../configure \
-               --prefix=${TOOLS}/ngspice \
+               --prefix=${{ env.tools }}/ngspice \
                --with-x \
                --enable-xspice \
                --disable-debug \
@@ -50,23 +50,23 @@ jobs:
                --enable-osdi
               make -j`nproc`
               make install
-              echo "${TOOLS}/ngspice/bin" >> $GITHUB_PATH
+              echo "${{ env.tools }}/ngspice/bin" >> $GITHUB_PATH
 
       - name: Install xschem
         run: |
               git clone --depth 1 https://github.com/StefanSchippers/xschem.git xschem
               cd xschem
-              ./configure --prefix=${TOOLS}/xschem
+              ./configure --prefix=${{ env.tools }}/xschem
               make -j`nproc`
               make install
-              echo "${TOOLS}/xschem/bin" >> $GITHUB_PATH
+              echo "${{ env.tools }}/xschem/bin" >> $GITHUB_PATH
 
       - name: Generate PDK files
         run: |
               git clone --depth 1 git://opencircuitdesign.com/open_pdks
               cd open_pdks
               ./configure \
-               --prefix=${TOOLS}/open_pdks \
+               --prefix=${{ env.tools }}/open_pdks \
                --enable-sky130-pdk \
                --with-sky130-variants=A \
                --enable-primitive-sky130 \
@@ -104,8 +104,8 @@ jobs:
               git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git mitch_bailey_sky130_io_schematics
               cd mitch_bailey_sky130_io_schematics
               export WORK_ROOT=${{ github.workspace }}/mitch_bailey_sky130_io_schematics/work/top_gpiov2
-              export PDKPATH=${TOOLS}/open_pdks/share/pdk/sky130A
-              export PDK_ROOT=${TOOLS}/open_pdks/share/pdk
+              export PDKPATH=${{ env.tools }}/open_pdks/share/pdk/sky130A
+              export PDK_ROOT=${{ env.tools }}/open_pdks/share/pdk
               export PDK=sky130A
               xschem --log test.log <<EOF
                 xschem load top_gpiov2.sch
