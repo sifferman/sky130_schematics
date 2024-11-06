@@ -21,6 +21,8 @@ jobs:
               sudo apt-get install -y python3
               sudo apt-get install -y tk-dev libxpm-dev tcl-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev m4 tcsh
 
+      - run: export TOOLS=${{ github.workspace }}/tools
+
       - name: Install magic
         run: |
               git clone --depth 1 https://github.com/RTimothyEdwards/magic
@@ -101,7 +103,7 @@ jobs:
         run: |
               git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git mitch_bailey_sky130_io_schematics
               cd mitch_bailey_sky130_io_schematics
-              export WORK_ROOT=${WORKSPACE}/mitch_bailey_sky130_io_schematics/work/top_gpiov2
+              export WORK_ROOT=${{ github.workspace }}/mitch_bailey_sky130_io_schematics/work/top_gpiov2
               export PDKPATH=${TOOLS}/open_pdks/share/pdk/sky130A
               export PDK_ROOT=${TOOLS}/open_pdks/share/pdk
               export PDK=sky130A
