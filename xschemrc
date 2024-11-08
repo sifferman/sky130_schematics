@@ -1,14 +1,10 @@
 
-# Inspired by https://github.com/d-m-bailey/sky130_fd_io/blob/main/xschemrc
-
-if {[catch {set PDKPATH $env(PDKPATH)}]} {
-    puts "Please set PDKPATH"
+if {[catch {set PDK_ROOT $env(PDK_ROOT)}]} {
+    puts "Please set PDK_ROOT"
     exit 1
 }
 
-append XSCHEM_LIBRARY_PATH :$env(PWD)
-append XSCHEM_LIBRARY_PATH :$PDKPATH/libs.tech/xschem
+source $PDK_ROOT/sky130A/libs.tech/xschem/xschemrc
+set XSCHEM_START_WINDOW {}
 
-lappend tcl_files $PDKPATH/libs.tech/xschem/scripts/sky130_models.tcl
-set SKYWATER_MODELS $PDKPATH/libs.tech/ngspice
-set SKYWATER_STDCELLS $PDKPATH/libs.ref/sky130_fd_sc_hd/spice
+set netlist_type spice
