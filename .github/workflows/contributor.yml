@@ -1,0 +1,13 @@
+name: Contributor Agreement
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  Test:
+    name: "'docs/CONTRIBUTORS' was signed"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip3 install regex
+      - run: scripts/check_contributors.py
