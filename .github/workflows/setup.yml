@@ -100,12 +100,12 @@ jobs:
 
       - name: LVS
         run: |
-              export PDKPATH=${{ env.tools }}/open_pdks/share/pdk/sky130A
+              export PDK_ROOT=${{ env.tools }}/open_pdks/share/pdk
               make lvs/or2/sky130_fd_sc_hd__or2_0.report
 
       - name: Generate SVGs
         run: |
-              export PDKPATH=${{ env.tools }}/open_pdks/share/pdk/sky130A
+              export PDK_ROOT=${{ env.tools }}/open_pdks/share/pdk
               make svg/or2/sky130_fd_sc_hd__or2_0.svg
 
       - name: Tar

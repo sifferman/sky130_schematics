@@ -18,7 +18,7 @@ svg/%.svg: schematics/%.sch
 lvs/%.report: references/%.spice netlists/%.spice
 	mkdir -p $(dir $@)
 	netgen -batch \
-	 lvs "netlists/$*.spice $(notdir $*)" "references/$*.spice $(notdir $*)" ${PDKPATH}/libs.tech/netgen/setup.tcl $@ -blackbox
+	 lvs "netlists/$*.spice $(notdir $*)" "references/$*.spice $(notdir $*)" ${PDK_ROOT}/sky130A/libs.tech/netgen/setup.tcl $@ -blackbox
 
 references/%.spice:
 	mkdir -p $(dir $@)
