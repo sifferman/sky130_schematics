@@ -1,7 +1,12 @@
 
-DOWNLOAD := download
-
 REPO := efabless/skywater-pdk-libs-sky130_fd_sc_hd
+
+SCHEMATICS := $(shell find schematics -name "*.sch")
+ALL_SVG_FILES := $(patsubst schematics/%.sch,svg/%.svg,$(SCHEMATICS))
+ALL_LVS_FILES := $(patsubst schematics/%.sch,lvs/%.report,$(SCHEMATICS))
+
+all_svg: ${ALL_SVG_FILES}
+all_lvs: ${ALL_LVS_FILES}
 
 .SECONDARY:
 
