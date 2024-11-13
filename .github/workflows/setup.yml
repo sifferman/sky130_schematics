@@ -80,7 +80,7 @@ jobs:
                --enable-sky130-pdk \
                --with-sky130-variants=A \
                --enable-primitive-sky130 \
-               --enable-io-sky130 \
+               --disable-io-sky130 \
                --disable-sc-hs-sky130 \
                --disable-sc-ms-sky130 \
                --disable-sc-ls-sky130 \
