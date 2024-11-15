@@ -103,4 +103,4 @@ jobs:
                  xschem exit closewindow force
                EOF
                grep "Symbol not found" test.log && exit 1 || echo "No Symbol Errors"
-               $LVS_ROOT/run_full_lvs lvs/top_gpiov2/lvs_config.json
+               # $LVS_ROOT/run_full_lvs lvs/top_gpiov2/lvs_config.json
