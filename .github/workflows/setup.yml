@@ -1,11 +1,10 @@
-name: Build
+name: Setup
 
 on:
   push:
   pull_request:
   workflow_dispatch:
-permissions:
-  contents: write
+
 jobs:
   build:
     env:
@@ -21,109 +20,86 @@ jobs:
       - name: Install Dependencies
         run: |
               sudo apt-get update
-              sudo apt-get install -y python3
+              sudo apt-get install -y python3-full python3-pip xz-utils
               sudo apt-get install -y tk-dev libxpm-dev tcl-dev libx11-dev flex libtool-bin libxaw7-dev libreadline6-dev libcairo2-dev m4 tcsh
 
       - name: Install magic
         run: |
-              git clone --depth 1 https://github.com/RTimothyEdwards/magic
-              cd magic
-              ./configure --prefix=${{ env.tools }}/magic
-              make -j`nproc`
-              make install
-              echo "${{ env.tools }}/magic/bin" >> $GITHUB_PATH
+               git clone --depth 1 https://github.com/RTimothyEdwards/magic
+               cd magic
+               ./configure --prefix=${{ env.tools }}/magic
+               make -j`nproc`
+               make install
+               echo "${{ env.tools }}/magic/bin" >> $GITHUB_PATH
 
       - name: Install ngspice
         run: |
-              git clone --depth 1 git://git.code.sf.net/p/ngspice/ngspice
-              cd ngspice
-              mkdir -p build
-              ./autogen.sh
-              cd build
-              ../configure \
-               --prefix=${{ env.tools }}/ngspice \
-               --with-x \
-               --enable-xspice \
-               --disable-debug \
-               --enable-cider \
-               --with-readline=yes \
-               --enable-openmp \
-               --enable-osdi
-              make -j`nproc`
-              make install
-              echo "${{ env.tools }}/ngspice/bin" >> $GITHUB_PATH
+               git clone --depth 1 git://git.code.sf.net/p/ngspice/ngspice
+               cd ngspice
+               mkdir -p build
+               ./autogen.sh
+               cd build
+               ../configure \
+                --prefix=${{ env.tools }}/ngspice \
+                --with-x \
+                --enable-xspice \
+                --disable-debug \
+                --enable-cider \
+                --with-readline=yes \
+                --enable-openmp \
+                --enable-osdi
+               make -j`nproc`
+               make install
+               echo "${{ env.tools }}/ngspice/bin" >> $GITHUB_PATH
 
       - name: Install xschem
         run: |
-              git clone --depth 1 https://github.com/StefanSchippers/xschem.git xschem
-              cd xschem
-              ./configure --prefix=${{ env.tools }}/xschem
-              make -j`nproc`
-              make install
-              echo "${{ env.tools }}/xschem/bin" >> $GITHUB_PATH
+               git clone --depth 1 https://github.com/StefanSchippers/xschem.git xschem
+               cd xschem
+               ./configure --prefix=${{ env.tools }}/xschem
+               make -j`nproc`
+               make install
+               echo "${{ env.tools }}/xschem/bin" >> $GITHUB_PATH
 
       - name: Install netgen
         run: |
-              git clone --depth 1 https://github.com/RTimothyEdwards/netgen.git
-              cd netgen
-              ./configure --prefix=${{ env.tools }}/netgen
-              make -j`nproc`
-              make install
-              echo "${{ env.tools }}/netgen/bin" >> $GITHUB_PATH
+               git clone --depth 1 https://github.com/RTimothyEdwards/netgen.git
+               cd netgen
+               ./configure --prefix=${{ env.tools }}/netgen
+               make -j`nproc`
+               make install
+               echo "${{ env.tools }}/netgen/bin" >> $GITHUB_PATH
 
       - name: Generate PDK files
         run: |
-              git clone --depth 1 git://opencircuitdesign.com/open_pdks
-              cd open_pdks
-              ./configure \
-               --prefix=${{ env.tools }}/open_pdks \
-               --enable-sky130-pdk \
-               --with-sky130-variants=A \
-               --enable-primitive-sky130 \
-               --disable-io-sky130 \
-               --disable-sc-hs-sky130 \
-               --disable-sc-ms-sky130 \
-               --disable-sc-ls-sky130 \
-               --disable-sc-lp-sky130 \
-               --enable-sc-hd-sky130 \
-               --disable-sc-hdll-sky130 \
-               --disable-sc-hvl-sky130 \
-               --disable-alpha-sky130 \
-               --enable-xschem-sky130 \
-               --disable-sram-sky130 \
-               --disable-osu-t12-sky130 \
-               --disable-osu-t15-sky130 \
-               --disable-osu-t18-sky130
-              make -j`nproc`
-              make install
-              make veryclean
+              python3 -m venv sky130-venv
+              sky130-venv/bin/python3 -m pip install --upgrade --no-cache-dir volare
+              export PDK_ROOT=${{ github.workspace }}/.volare
+              sky130-venv/bin/volare enable 6d4d11780c40b20ee63cc98e645307a9bf2b2ab8
 
-      - name: LVS
+      - name: Download Caravel
         run: |
-              export PDK_ROOT=${{ env.tools }}/open_pdks/share/pdk
-              make all_lvs
+               git clone --depth 1 https://github.com/efabless/caravel.git
+               make -C caravel gds/chip_io.gds
 
-      - name: Generate SVGs
+      - name: Download Backend Layout Check Scripts
         run: |
-              export PDK_ROOT=${{ env.tools }}/open_pdks/share/pdk
-              make all_svg
+               git clone --depth 1 https://github.com/d-m-bailey/extra_be_checks.git backend_layout_checks
 
-      - name: Tar
+      - name: Verify Installation with Mitch Baileys sky130_io Schematics
         run: |
-          cd svg
-          tar -czf cells.tar.gz *
-
-      - name: Create Tag
-        run: |
-          echo "TAG_NAME=$(date +%Y.%m.%d.%H.%M)" >> "$GITHUB_ENV"
-          git tag ${{ env.TAG_NAME }}
-          git push origin ${{ env.TAG_NAME }}
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: True
-          omitBody: True
-          tag: ${{ env.TAG_NAME }}
-          artifacts: |
-            svg/cells.tar.gz
-          token: ${{ secrets.GITHUB_TOKEN }}
+               git clone --depth 1 https://github.com/d-m-bailey/sky130_fd_io.git mitch_bailey_sky130_io_schematics
+               export CARAVEL_ROOT=${{ github.workspace }}/caravel
+               export LVS_ROOT=${{ github.workspace }}/backend_layout_checks
+               export WORK_ROOT=${{ github.workspace }}/mitch_bailey_sky130_io_schematics/work/top_gpiov2
+               export PDKPATH=${{ github.workspace }}/.volare/sky130A
+               export PDK_ROOT=${{ github.workspace }}/.volare
+               export PDK=sky130A
+               xschem --log test.log <<EOF
+                 xschem load top_gpiov2.sch
+                 set lvs_netlist 1
+                 set netlist_dir [xschem get current_dirname]/simulation
+                 xschem netlist
+                 xschem exit closewindow force
+               EOF
+               grep "Symbol not found" test.log && exit 1 || echo "No Symbol Errors"
