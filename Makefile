@@ -23,6 +23,9 @@ svg/%.svg: schematics/%.sch
 	 rm -f $@; \
 	 exit 1; \
 	fi
+	flock /tmp/inkscape.lock \
+	 inkscape $@ --export-overwrite --export-filename=$@ \
+	 --actions="select-by-id:rect1;delete;page-fit-to-selection"
 
 lvs/%.report: references/%.spice netlists/%.spice
 	mkdir -p $(dir $@)
