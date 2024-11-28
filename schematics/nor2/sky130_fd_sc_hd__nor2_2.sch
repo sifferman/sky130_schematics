@@ -16,8 +16,18 @@ N -150 -40 -150 -20 {lab=Y}
 N -40 40 20 40 {lab=VGND}
 N -40 -20 20 -20 {lab=Y}
 N -150 -40 50 -40 {lab=Y}
-N -130 -210 -130 -180 {lab=#net1}
+N -190 -260 -190 -230 {lab=VPWR}
 N -130 -60 -130 -40 {lab=Y}
+N -240 -60 -240 -40 {lab=Y}
+N -240 -40 -150 -40 {lab=Y}
+N -240 -130 -130 -130 {lab=#net1}
+N -240 -130 -240 -120 {lab=#net1}
+N -130 -130 -130 -120 {lab=#net1}
+N -240 -170 -240 -160 {lab=#net1}
+N -240 -160 -130 -160 {lab=#net1}
+N -240 -230 -130 -230 {lab=VPWR}
+N -130 -170 -130 -160 {lab=#net1}
+N -180 -160 -180 -130 {lab=#net1}
 C {ipin.sym} -470 -130 0 0 {name=p1 lab=A}
 C {opin.sym} -400 -130 0 0 {name=p2 lab=Y}
 C {ipin.sym} -470 -110 0 0 {name=p18 lab=B}
@@ -60,20 +70,36 @@ C {lab_pin.sym} -100 10 2 0 {name=p5 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} 20 10 2 1 {name=p8 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} -140 10 2 1 {name=p14 sig_type=std_logic lab=B}
 C {lab_pin.sym} 60 10 0 1 {name=p15 sig_type=std_logic lab=A}
-C {sky130_fd_pr/pfet_01v8_hvt.sym} -150 -150 0 0 {name=M1
-W=2000000u
+C {sky130_fd_pr/pfet_01v8_hvt.sym} -260 -200 0 0 {name=M1
+W=1000000u
 L=150000u
 model=pfet_01v8_hvt
 spiceprefix=X
 }
 C {sky130_fd_pr/pfet_01v8_hvt.sym} -150 -90 0 0 {name=M4
-W=2000000u
+W=1000000u
 L=150000u
 model=pfet_01v8_hvt
 spiceprefix=X
 }
 C {lab_pin.sym} -130 -90 2 0 {name=p4 sig_type=std_logic lab=VPB}
 C {lab_pin.sym} -170 -90 0 0 {name=p12 sig_type=std_logic lab=B}
-C {lab_pin.sym} -130 -210 2 0 {name=p13 sig_type=std_logic lab=VPWR}
-C {lab_pin.sym} -170 -150 0 0 {name=p3 sig_type=std_logic lab=A}
-C {lab_pin.sym} -130 -150 0 1 {name=p9 sig_type=std_logic lab=VPB}
+C {lab_pin.sym} -190 -260 2 0 {name=p13 sig_type=std_logic lab=VPWR}
+C {lab_pin.sym} -280 -200 0 0 {name=p3 sig_type=std_logic lab=A}
+C {lab_pin.sym} -240 -200 0 1 {name=p9 sig_type=std_logic lab=VPB}
+C {sky130_fd_pr/pfet_01v8_hvt.sym} -260 -90 0 0 {name=M7
+W=1000000u
+L=150000u
+model=pfet_01v8_hvt
+spiceprefix=X
+}
+C {lab_pin.sym} -240 -90 2 0 {name=p23 sig_type=std_logic lab=VPB}
+C {lab_pin.sym} -280 -90 0 0 {name=p24 sig_type=std_logic lab=B}
+C {sky130_fd_pr/pfet_01v8_hvt.sym} -150 -200 0 0 {name=M8
+W=1000000u
+L=150000u
+model=pfet_01v8_hvt
+spiceprefix=X
+}
+C {lab_pin.sym} -170 -200 0 0 {name=p25 sig_type=std_logic lab=A}
+C {lab_pin.sym} -130 -200 0 1 {name=p26 sig_type=std_logic lab=VPB}
