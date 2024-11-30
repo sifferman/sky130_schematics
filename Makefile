@@ -29,8 +29,13 @@ svg/%.svg: schematics/%.sch
 
 lvs/%.report: references/%.spice netlists/%.spice
 	mkdir -p $(dir $@)
+	rm -f $(@:.report=.failed)
 	netgen -batch \
 	 lvs "netlists/$*.spice $(notdir $*)" "references/$*.spice $(notdir $*)" ${PDK_ROOT}/sky130A/libs.tech/netgen/setup.tcl $@ -blackbox
+	@if grep -q "Mismatch" $@ >&2; then \
+	 mv $@ $(@:.report=.failed); \
+	 exit 1; \
+	fi
 
 references/%.spice:
 	mkdir -p $(dir $@)
