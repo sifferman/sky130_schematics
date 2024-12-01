@@ -25,12 +25,12 @@ N -160 -60 -160 0 {lab=Y}
 N -160 -30 30 -30 {lab=Y}
 N -160 100 -160 120 {lab=VGND}
 C {ipin.sym} -470 -130 0 0 {name=p1 lab=A}
-C {opin.sym} -400 -130 0 0 {name=p2 lab=Y}
 C {ipin.sym} -470 -110 0 0 {name=p18 lab=B}
 C {ipin.sym} -470 -90 0 0 {name=p19 lab=VGND}
 C {ipin.sym} -470 -70 0 0 {name=p20 lab=VNB}
 C {ipin.sym} -470 -50 0 0 {name=p21 lab=VPB}
 C {ipin.sym} -470 -30 0 0 {name=p22 lab=VPWR}
+C {opin.sym} -400 -130 0 0 {name=p2 lab=Y}
 C {sky130_fd_pr/nfet_01v8.sym} -360 50 2 1 {name=M2
 W=650000u
 L=150000u

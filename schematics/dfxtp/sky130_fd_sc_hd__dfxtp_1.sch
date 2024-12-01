@@ -38,12 +38,12 @@ N 170 530 290 530 {lab=#net3}
 N 10 440 130 440 {lab=#net2}
 N 10 190 10 440 {lab=#net2}
 C {ipin.sym} -300 -60 0 0 {name=p1 lab=CLK}
-C {opin.sym} 440 190 0 0 {name=p2 lab=Q}
 C {ipin.sym} -810 190 0 0 {name=p18 lab=D}
 C {ipin.sym} -450 -90 0 0 {name=p19 lab=VGND}
 C {ipin.sym} -450 -70 0 0 {name=p20 lab=VNB}
 C {ipin.sym} -450 -50 0 0 {name=p21 lab=VPB}
 C {ipin.sym} -450 -30 0 0 {name=p22 lab=VPWR}
+C {opin.sym} 440 190 0 0 {name=p2 lab=Q}
 C {sky130_fd_pr/pfet_01v8_hvt.sym} 150 410 0 1 {name=M0
 W=420000u
 L=150000u
