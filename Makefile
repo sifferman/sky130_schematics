@@ -30,6 +30,15 @@ svg/%.svg: schematics/%.sch
 lvs/%.report: references/%.spice netlists/%.spice
 	mkdir -p $(dir $@)
 	rm -f $(@:.report=.failed)
+	@REFERENCE_PORTS=$$(grep -m 1 -E '^\.subckt ' references/$*.spice); \
+	 NETLIST_PORTS=$$(grep -m 1 -E '^\.subckt ' netlists/$*.spice); \
+	 if [ "$$NETLIST_PORTS" != "$$REFERENCE_PORTS" ]; then \
+	  echo "ERROR: .subckt definitions do not match between \"netlists/$*.spice\" and \"references/$*.spice\"" >&2; \
+	  echo " Expected: $$REFERENCE_PORTS" >&2; \
+	  echo " Received: $$NETLIST_PORTS" >&2; \
+	  echo " Please reorder the ports inside \"schematics/$*.sch\"" >&2; \
+	  exit 1; \
+	 fi
 	netgen -batch \
 	 lvs "netlists/$*.spice $(notdir $*)" "references/$*.spice $(notdir $*)" ${PDK_ROOT}/sky130A/libs.tech/netgen/setup.tcl $@ -blackbox
 	@if grep -q "Mismatch" $@ >&2; then \
