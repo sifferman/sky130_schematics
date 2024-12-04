@@ -14,18 +14,18 @@ N -60 0 60 0 {lab=#net1}
 N -60 -60 0 -60 {lab=VPWR}
 N 0 140 0 160 {lab=VGND}
 N 0 0 0 20 {lab=#net1}
-N 270 180 270 200 {lab=VGND}
-N 270 100 270 120 {lab=#net2}
-N 270 20 270 40 {lab=VPWR}
 N 270 -200 270 -180 {lab=VPWR}
 N 60 -0 200 0 {lab=#net1}
 N 200 -110 200 0 {lab=#net1}
 N 200 -110 230 -110 {lab=#net1}
-N 200 0 340 0 {lab=#net1}
-N 340 -0 340 110 {lab=#net1}
-N 310 70 310 150 {lab=#net1}
-N 310 110 340 110 {lab=#net1}
-N 220 110 270 100 {lab=#net2}
+N 270 180 270 200 {lab=VPWR}
+N 270 100 270 120 {lab=#net2}
+N 270 20 270 40 {lab=VGND}
+N 200 -0 200 100 {lab=#net1}
+N 230 70 230 150 {lab=#net1}
+N 200 100 200 110 {lab=#net1}
+N 200 110 230 110 {lab=#net1}
+N 270 120 370 120 {lab=#net2}
 C {ipin.sym} -270 -100 0 0 {name=p1 lab=A}
 C {opin.sym} -200 -100 0 0 {name=p2 lab=X}
 C {ipin.sym} -270 -80 0 0 {name=p18 lab=B}
@@ -84,20 +84,20 @@ C {lab_pin.sym} 40 50 2 0 {name=p15 sig_type=std_logic lab=A}
 C {lab_pin.sym} 0 50 0 0 {name=p16 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} 0 110 0 0 {name=p17 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} -60 -30 2 0 {name=p25 sig_type=std_logic lab=VPB}
-C {sky130_fd_pr/nfet_01v8.sym} 290 150 0 1 {name=M5
-W=650000u
-L=150000u
-model=nfet_01v8
-spiceprefix=X
-}
-C {lab_pin.sym} 270 200 2 0 {name=p40 sig_type=std_logic lab=VGND}
-C {lab_pin.sym} 270 150 0 0 {name=p41 sig_type=std_logic lab=VNB}
-C {sky130_fd_pr/pfet_01v8_hvt.sym} 290 70 0 1 {name=M7
+C {sky130_fd_pr/pfet_01v8_hvt.sym} 250 150 2 1 {name=M8
 W=1000000u
 L=150000u
 model=pfet_01v8_hvt
 spiceprefix=X
 }
-C {lab_pin.sym} 270 20 2 0 {name=p43 sig_type=std_logic lab=VPWR}
-C {lab_pin.sym} 270 70 0 0 {name=p11 sig_type=std_logic lab=VPB}
-C {lab_pin.sym} 220 110 0 0 {name=p23 sig_type=std_logic lab=X}
+C {lab_pin.sym} 270 150 2 0 {name=p24 sig_type=std_logic lab=VPB}
+C {lab_pin.sym} 270 200 2 0 {name=p26 sig_type=std_logic lab=VPWR}
+C {sky130_fd_pr/nfet_01v8.sym} 250 70 2 1 {name=M9
+W=650000u
+L=150000u
+model=nfet_01v8
+spiceprefix=X
+}
+C {lab_pin.sym} 270 70 2 0 {name=p27 sig_type=std_logic lab=VNB}
+C {lab_pin.sym} 270 20 2 0 {name=p28 sig_type=std_logic lab=VGND}
+C {lab_pin.sym} 370 120 2 0 {name=p11 sig_type=std_logic lab=X}
