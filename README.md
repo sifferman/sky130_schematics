@@ -9,6 +9,8 @@ https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/tree/master/cells
 Automatically generated schematics are published here:
 https://github.com/sifferman/sky130_schematics/releases/latest
 
+![sky130_fd_sc_hd__dfxtp_1](docs/sky130_fd_sc_hd__dfxtp_1.svg)
+
 ## Contributing
 
 Follow these steps to contribute a new schematic:
