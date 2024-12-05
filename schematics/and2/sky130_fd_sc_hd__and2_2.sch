@@ -27,12 +27,12 @@ N 200 100 200 110 {lab=#net1}
 N 200 110 230 110 {lab=#net1}
 N 270 120 370 120 {lab=#net2}
 C {ipin.sym} -270 -100 0 0 {name=p1 lab=A}
-C {opin.sym} -200 -100 0 0 {name=p2 lab=X}
 C {ipin.sym} -270 -80 0 0 {name=p18 lab=B}
 C {ipin.sym} -270 -60 0 0 {name=p19 lab=VGND}
 C {ipin.sym} -270 -40 0 0 {name=p20 lab=VNB}
 C {ipin.sym} -270 -20 0 0 {name=p21 lab=VPB}
 C {ipin.sym} -270 0 0 0 {name=p22 lab=VPWR}
+C {opin.sym} -200 -100 0 0 {name=p2 lab=X}
 C {sky130_fd_pr/nfet_01v8.sym} 250 -70 2 1 {name=M4
 W=650000u
 L=150000u
