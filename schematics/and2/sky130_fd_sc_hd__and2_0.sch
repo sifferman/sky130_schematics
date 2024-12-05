@@ -16,12 +16,12 @@ N 200 60 200 80 {lab=VGND}
 N 160 -50 160 30 {lab=#net1}
 N 200 -20 300 -20 {lab=X}
 C {ipin.sym} -270 -100 0 0 {name=p1 lab=A}
-C {opin.sym} -200 -100 0 0 {name=p2 lab=X}
 C {ipin.sym} -270 -80 0 0 {name=p18 lab=B}
 C {ipin.sym} -270 -60 0 0 {name=p19 lab=VGND}
 C {ipin.sym} -270 -40 0 0 {name=p20 lab=VNB}
 C {ipin.sym} -270 -20 0 0 {name=p21 lab=VPB}
 C {ipin.sym} -270 0 0 0 {name=p22 lab=VPWR}
+C {opin.sym} -200 -100 0 0 {name=p2 lab=X}
 C {sky130_fd_pr/pfet_01v8_hvt.sym} 80 -30 2 0 {name=M4
 W=420000u
 L=150000u
