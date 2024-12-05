@@ -1,7 +1,18 @@
 
 set svg_name [xschem get current_dirname]/svg/$::env(SCHEMATIC).svg
+set log_file [xschem get current_dirname]/logs/$::env(SCHEMATIC).svg.log
 
 xschem load schematics/$::env(SCHEMATIC).sch
+
+set log_content [read [open $log_file r]]
+set symbol_error 0
+foreach line [split $log_content "\n"] {
+    if {[string match "*Symbol not found*" $line]} {
+        puts stderr "Error: $line"
+        set symbol_error 1
+    }
+}
+if { $symbol_error } {exit 1}
 
 
 # Black and White

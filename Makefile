@@ -19,10 +19,6 @@ svg/%.svg: schematics/%.sch
 	mkdir -p $(dir $@)
 	mkdir -p $(dir logs/$*)
 	SCHEMATIC=$* xschem --no_x --log logs/$*.svg.log --script scripts/generate_svg.tcl
-	@if grep "Symbol not found" logs/$*.svg.log >&2; then \
-	 rm -f $@; \
-	 exit 1; \
-	fi
 	flock /tmp/inkscape.lock \
 	 inkscape $@ --export-overwrite --export-filename=$@ \
 	 --actions="select-by-id:rect1;delete;page-fit-to-selection"
