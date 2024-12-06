@@ -4,10 +4,10 @@
 This repository compiles verified visual schematics for all SKY130 High-Density Digital Standard Cells. Each schematic is validated with Layout Versus Schematic (LVS), ensuring 100% accuracy with the official SKY130 cells.
 
 The official SKY130 cells can be found here:
-https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/tree/master/cells
+<https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/tree/master/cells>
 
 Automatically generated schematics are published here:
-https://github.com/sifferman/sky130_schematics/releases/latest
+<https://github.com/sifferman/sky130_schematics/releases/latest>
 
 ![sky130_fd_sc_hd__dfxtp_1](docs/sky130_fd_sc_hd__dfxtp_1.svg)
 
@@ -24,24 +24,20 @@ Follow these steps to contribute a new schematic:
    * Create a new branch off `main` for your work.
 
 2. **Claim a Cell**
-   * Choose a cell to implement and create a GitHub Issue to claim it:
-     <https://github.com/sifferman/sky130_schematics/issues>
+   * Choose a cell to implement and create a GitHub Issue to claim it: <https://github.com/sifferman/sky130_schematics/issues>
 
 3. **Prepare Your Schematic File**
    * Mirror the official SKY130 cell's path and filename in this repository.
      Example:
-     * Official SPICE file:
-       [`sky130_fd_sc_hd/cells/or2/sky130_fd_sc_hd__or2_0.spice`](https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/blob/master/cells/or2/sky130_fd_sc_hd__or2_0.spice)
-     * Your schematic file:
-       [`schematics/or2/sky130_fd_sc_hd__or2_0.sch`](https://github.com/sifferman/sky130_schematics/blob/main/schematics/or2/sky130_fd_sc_hd__or2_0.sch)
+     * Official SPICE file: [`sky130_fd_sc_hd/cells/or2/sky130_fd_sc_hd__or2_0.spice`](https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/blob/master/cells/or2/sky130_fd_sc_hd__or2_0.spice)
+     * Your schematic file: [`schematics/or2/sky130_fd_sc_hd__or2_0.sch`](https://github.com/sifferman/sky130_schematics/blob/main/schematics/or2/sky130_fd_sc_hd__or2_0.sch)
    * This naming consistency is required for LVS checks.
 
 4. **Start with a Template (Optional)**
    * Copy an existing schematic into your new file to use as a starting point.
 
 5. **Edit in xschem**
-   * Open `xschem` from the root directory of this project to ensure the provided
-     [`xschemrc`](https://github.com/sifferman/sky130_schematics/blob/main/xschemrc) file is loaded.
+   * Open `xschem` from the root directory of this project to ensure the provided [`xschemrc`](https://github.com/sifferman/sky130_schematics/blob/main/xschemrc) file is loaded.
 
 6. **Create the Schematic**
    * Design the schematic in `xschem` based on the SPICE model for your chosen cell.
