@@ -37,9 +37,19 @@ if {$ref_ports ne $netlist_ports} {
 
 # Run LVS
 lvs "$REFERENCE_SPICE_FILE $REFERENCE_CELL_NAME" "$XSCHEM_SPICE_FILE $XSCHEM_CELL_NAME" ${PDK_ROOT}/sky130A/libs.tech/netgen/setup.tcl $REPORT_FILE -blackbox -list
-if {[file exists $REPORT_FILE]} {
-    set report_content [read [open $REPORT_FILE "r"]]
-    if {[string match "*Mismatch*" $report_content]} {
+
+# Check for errors
+set error_signals {
+    "*Mismatch*"
+    "Subcell(s) failed matching"
+    "Top level cell failed pin matching."
+    "Property errors were found."
+    "Netlists do not match."
+    "Circuits match uniquely with port errors."
+}
+set log_content [read [open $REPORT_FILE r]]
+foreach signal $error_signals {
+    if {[string match $signal $log_content]} {
         set failed_report_file [string map {".report" ".failed"} $REPORT_FILE]
         file rename $REPORT_FILE $failed_report_file
         exit 1
