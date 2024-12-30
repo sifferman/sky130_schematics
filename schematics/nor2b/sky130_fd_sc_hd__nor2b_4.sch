@@ -40,25 +40,12 @@ N -570 -150 -570 -120 {lab=B_N}
 N -570 -120 -540 -120 {lab=B_N}
 N -500 -90 -500 -70 {lab=VGND}
 N -500 -230 -500 -210 {lab=VPWR}
-N -100 -210 -100 -200 {lab=#net2}
-N -220 -210 -220 -200 {lab=#net2}
-N -500 -150 -460 -150 {lab=#net2}
-N -460 -150 -460 -60 {lab=#net2}
-N -460 -50 -100 -50 {lab=#net2}
-N -100 -50 -100 -40 {lab=#net2}
-N -220 -50 -220 -40 {lab=#net2}
-N -340 -50 -340 -40 {lab=#net2}
-N -460 -60 -460 -50 {lab=#net2}
-N -460 -210 -350 -210 {lab=#net2}
-N -460 -210 -460 -150 {lab=#net2}
+N -500 -150 -460 -150 {lab=B}
 N 60 -270 60 -260 {lab=#net1}
 N 60 -340 60 -330 {lab=VPWR}
 N 60 -240 60 -230 {lab=#net1}
 N 60 -170 60 -160 {lab=Y}
 N -180 -240 180 -240 {lab=#net1}
-N -350 -210 220 -210 {lab=#net2}
-N 220 -210 220 -200 {lab=#net2}
-N 100 -210 100 -200 {lab=#net2}
 N -0 -120 60 -120 {lab=Y}
 N 60 -80 60 -70 {lab=Y}
 N 60 -10 60 0 {lab=VGND}
@@ -68,7 +55,7 @@ N 300 -80 300 -70 {lab=Y}
 N 300 -10 300 0 {lab=VGND}
 N -420 -80 420 -80 {lab=Y}
 N -0 -160 -0 -80 {lab=Y}
-N -460 -50 -460 -40 {lab=#net2}
+N -590 -150 -570 -150 {lab=B_N}
 C {sky130_fd_pr/pfet_01v8_hvt.sym} -520 -180 0 0 {name=M1
 W=1000000u
 L=150000u
@@ -89,12 +76,10 @@ C {lab_pin.sym} 0 -400 2 0 {name=p13 sig_type=std_logic lab=VPWR}
 C {lab_pin.sym} 0 20 2 0 {name=p16 sig_type=std_logic lab=VGND}
 C {lab_pin.sym} 60 -120 2 0 {name=p17 sig_type=std_logic lab=Y
 }
-C {ipin.sym} -320 -300 0 0 {name=p18 lab=B_N
-}
-C {ipin.sym} -320 -280 0 0 {name=p19 lab=VGND}
-C {ipin.sym} -320 -260 0 0 {name=p20 lab=VNB}
-C {ipin.sym} -320 -240 0 0 {name=p21 lab=VPB}
-C {ipin.sym} -320 -220 0 0 {name=p22 lab=VPWR}
+C {ipin.sym} -320 -300 0 0 {name=p19 lab=VGND}
+C {ipin.sym} -320 -280 0 0 {name=p20 lab=VNB}
+C {ipin.sym} -320 -260 0 0 {name=p21 lab=VPB}
+C {ipin.sym} -320 -240 0 0 {name=p22 lab=VPWR}
 C {sky130_fd_pr/pfet_01v8_hvt.sym} 200 -300 0 1 {name=M4
 W=1000000u
 L=150000u
@@ -121,7 +106,6 @@ model=nfet_01v8
 spiceprefix=X
 }
 C {lab_pin.sym} -500 -120 2 0 {name=p24 sig_type=std_logic lab=VNB}
-C {lab_pin.sym} -570 -150 0 0 {name=p25 sig_type=std_logic lab=B_N}
 C {sky130_fd_pr/nfet_01v8.sym} -80 -40 2 1 {name=M11
 W=650000u
 L=150000u
@@ -171,8 +155,6 @@ L=150000u
 model=pfet_01v8_hvt
 spiceprefix=X
 }
-C {lab_pin.sym} -180 -200 2 0 {name=p37 sig_type=std_logic lab=VPB}
-C {lab_pin.sym} -60 -200 2 0 {name=p38 sig_type=std_logic lab=VPB}
 C {lab_pin.sym} -500 -70 2 0 {name=p9 sig_type=std_logic lab=VGND}
 C {lab_pin.sym} -500 -230 2 0 {name=p39 sig_type=std_logic lab=VPWR}
 C {lab_pin.sym} 180 -300 2 1 {name=p4 sig_type=std_logic lab=VPB}
@@ -218,3 +200,16 @@ spiceprefix=X
 }
 C {lab_pin.sym} 300 -40 2 1 {name=p29 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} 340 -40 0 1 {name=p31 sig_type=std_logic lab=A}
+C {ipin.sym} -590 -150 0 0 {name=p18 lab=B_N
+}
+C {lab_pin.sym} -180 -200 2 0 {name=p25 sig_type=std_logic lab=VPB}
+C {lab_pin.sym} -60 -200 2 0 {name=p37 sig_type=std_logic lab=VPB}
+C {lab_pin.sym} -460 -150 0 1 {name=p38 sig_type=std_logic lab=B}
+C {lab_pin.sym} -460 -40 0 0 {name=p40 sig_type=std_logic lab=B}
+C {lab_pin.sym} -340 -40 0 0 {name=p41 sig_type=std_logic lab=B}
+C {lab_pin.sym} -220 -40 0 0 {name=p42 sig_type=std_logic lab=B}
+C {lab_pin.sym} -100 -40 0 0 {name=p43 sig_type=std_logic lab=B}
+C {lab_pin.sym} -220 -200 0 0 {name=p44 sig_type=std_logic lab=B}
+C {lab_pin.sym} -100 -200 0 0 {name=p45 sig_type=std_logic lab=B}
+C {lab_pin.sym} 100 -200 0 1 {name=p46 sig_type=std_logic lab=B}
+C {lab_pin.sym} 220 -200 0 1 {name=p47 sig_type=std_logic lab=B}
