@@ -13,16 +13,12 @@ all_lvs: ${ALL_LVS_FILES}
 netlists/%.spice: schematics/%.sch
 	mkdir -p $(dir $@)
 	mkdir -p $(dir logs/$*)
-	SCHEMATIC=$* xschem --log logs/$*.spice.log --script scripts/generate_netlist.tcl
+	SCHEMATIC=$* xschem --no_x --log logs/$*.spice.log --script scripts/generate_netlist.tcl
 
 svg/%.svg: schematics/%.sch
 	mkdir -p $(dir $@)
 	mkdir -p $(dir logs/$*)
-	SCHEMATIC=$* xschem --log logs/$*.svg.log --script scripts/generate_svg.tcl
-	@if grep "Symbol not found" logs/$*.svg.log >&2; then \
-	 rm -f $@; \
-	 exit 1; \
-	fi
+	SCHEMATIC=$* xschem --no_x --log logs/$*.svg.log --script scripts/generate_svg.tcl
 	flock /tmp/inkscape.lock \
 	 inkscape $@ --export-overwrite --export-filename=$@ \
 	 --actions="select-by-id:rect1;delete;page-fit-to-selection"
@@ -30,12 +26,12 @@ svg/%.svg: schematics/%.sch
 lvs/%.report: references/%.spice netlists/%.spice
 	mkdir -p $(dir $@)
 	rm -f $(@:.report=.failed)
-	netgen -batch \
-	 lvs "netlists/$*.spice $(notdir $*)" "references/$*.spice $(notdir $*)" ${PDK_ROOT}/sky130A/libs.tech/netgen/setup.tcl $@ -blackbox
-	@if grep -q "Mismatch" $@ >&2; then \
-	 mv $@ $(@:.report=.failed); \
-	 exit 1; \
-	fi
+	REFERENCE_SPICE_FILE=references/$*.spice \
+	 REFERENCE_CELL_NAME=$(notdir $*) \
+	 XSCHEM_SPICE_FILE=netlists/$*.spice \
+	 XSCHEM_CELL_NAME=$(notdir $*) \
+	 REPORT_FILE=$@ \
+	 netgen -batch source scripts/lvs.tcl
 
 references/%.spice:
 	mkdir -p $(dir $@)
