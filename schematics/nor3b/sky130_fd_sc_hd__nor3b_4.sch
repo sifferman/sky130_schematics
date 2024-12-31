@@ -109,6 +109,7 @@ spiceprefix=X
 }
 C {ipin.sym} -630 -300 0 0 {name=p1 lab=A}
 C {ipin.sym} -630 -280 0 0 {name=p18 lab=B}
+C {ipin.sym} -610 -150 0 0 {name=p14 lab=C_N}
 C {ipin.sym} -630 -260 0 0 {name=p19 lab=VGND}
 C {ipin.sym} -630 -240 0 0 {name=p20 lab=VNB}
 C {ipin.sym} -630 -220 0 0 {name=p21 lab=VPB}
@@ -122,11 +123,9 @@ C {lab_pin.sym} -340 -20 0 0 {name=p10 sig_type=std_logic lab=B}
 C {lab_pin.sym} -160 -20 2 0 {name=p11 sig_type=std_logic lab=B}
 C {lab_pin.sym} -250 -360 2 0 {name=p13 sig_type=std_logic lab=VPWR}
 C {lab_pin.sym} -250 30 2 0 {name=p16 sig_type=std_logic lab=VGND}
-C {lab_pin.sym} -80 -80 2 0 {name=p17 sig_type=std_logic lab=Y
-}
+C {lab_pin.sym} -80 -80 2 0 {name=p17 sig_type=std_logic lab=Y}
 C {lab_pin.sym} -100 -20 0 0 {name=p5 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} -60 -20 2 0 {name=p8 sig_type=std_logic lab=B}
-C {ipin.sym} -610 -150 0 0 {name=p14 lab=C_N}
 C {sky130_fd_pr/pfet_01v8_hvt.sym} -180 -130 0 1 {name=M6
 W=1000000u
 L=150000u
