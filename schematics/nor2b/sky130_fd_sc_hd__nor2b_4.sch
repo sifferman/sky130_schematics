@@ -86,20 +86,18 @@ model=nfet_01v8
 spiceprefix=X
 }
 C {ipin.sym} -510 -290 0 0 {name=p1 lab=A}
+C {ipin.sym} -510 -270 0 0 {name=p18 lab=B_N}
+C {ipin.sym} -510 -250 0 0 {name=p19 lab=VGND}
+C {ipin.sym} -510 -230 0 0 {name=p20 lab=VNB}
+C {ipin.sym} -510 -210 0 0 {name=p21 lab=VPB}
+C {ipin.sym} -510 -190 0 0 {name=p22 lab=VPWR}
 C {opin.sym} -430 -290 0 0 {name=p2 lab=Y}
 C {lab_pin.sym} -280 -300 2 0 {name=p3 sig_type=std_logic lab=VPB}
 C {lab_pin.sym} -300 -50 2 0 {name=p6 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} -320 -300 0 0 {name=p9 sig_type=std_logic lab=B_N}
 C {lab_pin.sym} 0 -400 2 0 {name=p13 sig_type=std_logic lab=VPWR}
 C {lab_pin.sym} 0 10 2 0 {name=p16 sig_type=std_logic lab=VGND}
-C {lab_pin.sym} 440 -100 2 0 {name=p17 sig_type=std_logic lab=Y
-}
-C {ipin.sym} -510 -270 0 0 {name=p18 lab=B_N
-}
-C {ipin.sym} -510 -250 0 0 {name=p19 lab=VGND}
-C {ipin.sym} -510 -230 0 0 {name=p20 lab=VNB}
-C {ipin.sym} -510 -210 0 0 {name=p21 lab=VPB}
-C {ipin.sym} -510 -190 0 0 {name=p22 lab=VPWR}
+C {lab_pin.sym} 440 -100 2 0 {name=p17 sig_type=std_logic lab=Y}
 C {sky130_fd_pr/pfet_01v8_hvt.sym} 160 -300 0 0 {name=M4
 W=1000000u
 L=150000u
