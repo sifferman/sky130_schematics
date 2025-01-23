@@ -96,21 +96,21 @@ C {ipin.sym} -490 -320 0 0 {name=p7 lab=VPWR}
 C {opin.sym} -420 -320 0 0 {name=p8 lab=X}
 C {lab_pin.sym} 30 -370 2 0 {name=p13 sig_type=std_logic lab=VPWR}
 C {lab_pin.sym} 40 250 2 0 {name=p16 sig_type=std_logic lab=VGND}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/pfet_01v8.sym} -210 -280 0 0 {name=M0
+C {sky130_fd_pr/pfet_01v8.sym} -210 -280 0 0 {name=M0
 W=1000000u
 L=150000u
 model=pfet_01v8_hvt
 spiceprefix=X
 }
 C {lab_pin.sym} -190 -280 2 0 {name=p9 sig_type=std_logic lab=VPB}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/pfet_01v8.sym} 80 -270 0 0 {name=M2
+C {sky130_fd_pr/pfet_01v8.sym} 80 -270 0 0 {name=M2
 W=420000u
 L=150000u
 model=pfet_01v8_hvt
 spiceprefix=X
 }
 C {lab_pin.sym} 60 -270 2 1 {name=p10 sig_type=std_logic lab=A}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/pfet_01v8.sym} -210 -140 0 0 {name=M1
+C {sky130_fd_pr/pfet_01v8.sym} -210 -140 0 0 {name=M1
 W=420000u
 L=150000u
 model=pfet_01v8_hvt
@@ -118,14 +118,14 @@ spiceprefix=X
 }
 C {lab_pin.sym} -190 -140 2 0 {name=p11 sig_type=std_logic lab=VPB}
 C {lab_pin.sym} -230 -140 2 1 {name=p12 sig_type=std_logic lab=B}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/pfet_01v8.sym} 60 -140 0 0 {name=M3
+C {sky130_fd_pr/pfet_01v8.sym} 60 -140 0 0 {name=M3
 W=1000000u
 L=150000u
 model=pfet_01v8_hvt
 spiceprefix=X
 }
 C {lab_pin.sym} -370 150 2 1 {name=p14 sig_type=std_logic lab=A}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/pfet_01v8.sym} 60 -30 0 0 {name=M5
+C {sky130_fd_pr/pfet_01v8.sym} 60 -30 0 0 {name=M5
 W=420000u
 L=150000u
 model=pfet_01v8_hvt
@@ -135,14 +135,14 @@ C {lab_pin.sym} 40 -30 2 1 {name=p15 sig_type=std_logic lab=C}
 C {lab_pin.sym} 80 -140 2 0 {name=p17 sig_type=std_logic lab=VPB}
 C {lab_pin.sym} 100 -270 2 0 {name=p18 sig_type=std_logic lab=VPB}
 C {lab_pin.sym} 80 -30 2 0 {name=p19 sig_type=std_logic lab=VPB}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/nfet_01v8.sym} -350 150 2 1 {name=M4
+C {sky130_fd_pr/nfet_01v8.sym} -350 150 2 1 {name=M4
 W=420000u
 L=150000u
 model=nfet_01v8
 spiceprefix=X
 }
 C {lab_pin.sym} -330 150 2 0 {name=p20 sig_type=std_logic lab=VNB}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/nfet_01v8.sym} -200 150 2 1 {name=M6
+C {sky130_fd_pr/nfet_01v8.sym} -200 150 2 1 {name=M6
 W=420000u
 L=150000u
 model=nfet_01v8
@@ -150,14 +150,14 @@ spiceprefix=X
 }
 C {lab_pin.sym} -220 150 2 1 {name=p21 sig_type=std_logic lab=C}
 C {lab_pin.sym} -180 150 2 0 {name=p24 sig_type=std_logic lab=VNB}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/nfet_01v8.sym} -10 150 2 1 {name=M7
+C {sky130_fd_pr/nfet_01v8.sym} -10 150 2 1 {name=M7
 W=650000u
 L=150000u
 model=nfet_01v8
 spiceprefix=X
 }
 C {lab_pin.sym} 10 150 2 0 {name=p26 sig_type=std_logic lab=VNB}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/nfet_01v8.sym} 170 150 2 1 {name=M8
+C {sky130_fd_pr/nfet_01v8.sym} 170 150 2 1 {name=M8
 W=420000u
 L=150000u
 model=nfet_01v8
@@ -165,7 +165,7 @@ spiceprefix=X
 }
 C {lab_pin.sym} 190 150 2 0 {name=p28 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} 150 150 2 1 {name=p29 sig_type=std_logic lab=B}
-C {/usr/sky130proj/pdkits/open_pdks/sources/xschem_sky130/sky130_fd_pr/nfet_01v8.sym} 330 150 2 1 {name=M9
+C {sky130_fd_pr/nfet_01v8.sym} 330 150 2 1 {name=M9
 W=650000u
 L=150000u
 model=nfet_01v8
