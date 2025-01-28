@@ -12,9 +12,15 @@ jobs:
   build-and-release:
     env:
       tools: ${{ github.workspace }}/tools
+      git: ${{ github.workspace }}/git
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Create build dirs
+        run: |
+          mkdir -p ${{ env.tools }}
+          mkdir -p ${{ env.git }}
 
       - name: Install apt packages
         run: |
@@ -28,6 +34,7 @@ jobs:
 
       - name: Install xschem
         run: |
+          cd ${{ env.git }}
           git clone --depth 1 https://github.com/StefanSchippers/xschem.git
           cd xschem
           ./configure --prefix=${{ env.tools }}/xschem
@@ -37,6 +44,7 @@ jobs:
 
       - name: Install netgen
         run: |
+          cd ${{ env.git }}
           git clone --depth 1 https://github.com/RTimothyEdwards/netgen.git
           cd netgen
           ./configure --prefix=${{ env.tools }}/netgen
