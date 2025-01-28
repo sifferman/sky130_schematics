@@ -56,12 +56,12 @@ jobs:
 
       - name: LVS
         run: |
-          export PDK_ROOT=${{ env.tools }}/volare-pdks
+          export PDK_ROOT=${{ env.tools }}/volare
           make all_lvs
 
       - name: Generate SVGs
         run: |
-          export PDK_ROOT=${{ env.tools }}/volare-pdks
+          export PDK_ROOT=${{ env.tools }}/volare
           make all_svg
 
       - name: Tar
