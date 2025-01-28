@@ -50,7 +50,7 @@ jobs:
           python3 -m venv volare-venv
           volare-venv/bin/python3 -m pip install --upgrade --no-cache-dir volare
           export PDK_ROOT=${{ env.tools }}/volare-pdks
-          volare ls-remote --pdk sky130
+          volare-venv/bin/volare ls-remote --pdk sky130
           # https://github.com/RTimothyEdwards/open_pdks/tree/0fe599b2afb6708d281543108caf8310912f54af
           volare-venv/bin/volare enable 0fe599b2afb6708d281543108caf8310912f54af
 
