@@ -26,35 +26,6 @@ jobs:
           sudo apt-get install -y libxpm-dev libx11-dev flex
           sudo apt-get install -y inkscape
 
-      - name: Install magic
-        run: |
-          git clone --depth 1 https://github.com/RTimothyEdwards/magic.git
-          cd magic
-          ./configure --prefix=${{ env.tools }}/magic
-          make -j`nproc`
-          make install
-          echo "${{ env.tools }}/magic/bin" >> $GITHUB_PATH
-
-      - name: Install ngspice
-        run: |
-          git clone --depth 1 git://git.code.sf.net/p/ngspice/ngspice
-          cd ngspice
-          mkdir -p build
-          ./autogen.sh
-          cd build
-          ../configure \
-            --prefix=${{ env.tools }}/ngspice \
-            --with-x \
-            --enable-xspice \
-            --disable-debug \
-            --enable-cider \
-            --with-readline=yes \
-            --enable-openmp \
-            --enable-osdi
-          make -j`nproc`
-          make install
-          echo "${{ env.tools }}/ngspice/bin" >> $GITHUB_PATH
-
       - name: Install xschem
         run: |
           git clone --depth 1 https://github.com/StefanSchippers/xschem.git
@@ -75,30 +46,13 @@ jobs:
 
       - name: Generate PDK files
         run: |
-          git clone --depth 1 git://opencircuitdesign.com/open_pdks
-          cd open_pdks
-          ./configure \
-            --prefix=${{ env.tools }}/open_pdks \
-            --enable-sky130-pdk \
-            --with-sky130-variants=A \
-            --enable-primitive-sky130 \
-            --disable-io-sky130 \
-            --disable-sc-hs-sky130 \
-            --disable-sc-ms-sky130 \
-            --disable-sc-ls-sky130 \
-            --disable-sc-lp-sky130 \
-            --enable-sc-hd-sky130 \
-            --disable-sc-hdll-sky130 \
-            --disable-sc-hvl-sky130 \
-            --disable-alpha-sky130 \
-            --enable-xschem-sky130 \
-            --disable-sram-sky130 \
-            --disable-osu-t12-sky130 \
-            --disable-osu-t15-sky130 \
-            --disable-osu-t18-sky130
-          make -j`nproc`
-          make install
-          make veryclean
+          cd ${{ env.tools }}
+          python3 -m venv volare-venv
+          volare-venv/bin/python3 -m pip install --upgrade --no-cache-dir volare
+          export PDK_ROOT=${{ env.tools }}/volare-pdks
+          volare ls-remote --pdk sky130
+          # https://github.com/RTimothyEdwards/open_pdks/tree/0fe599b2afb6708d281543108caf8310912f54af
+          volare-venv/bin/volare enable 0fe599b2afb6708d281543108caf8310912f54af
 
       - name: LVS
         run: |
