@@ -3,6 +3,11 @@ if {[catch {set PDK_ROOT $env(PDK_ROOT)}]} {
     puts "Please set PDK_ROOT"
     exit 1
 }
+set setup_file "${PDK_ROOT}/sky130A/libs.tech/netgen/setup.tcl"
+if {![file exists $setup_file]} {
+    puts stderr "ERROR: Setup file \"$setup_file\" does not exist. Ensure PDK_ROOT was set correctly."
+    exit 1
+}
 if {[catch {set REFERENCE_SPICE_FILE $env(REFERENCE_SPICE_FILE)}]} {
     puts "Please set REFERENCE_SPICE_FILE"
     exit 1
@@ -36,7 +41,13 @@ if {$ref_ports ne $netlist_ports} {
 }
 
 # Run LVS
-lvs "$REFERENCE_SPICE_FILE $REFERENCE_CELL_NAME" "$XSCHEM_SPICE_FILE $XSCHEM_CELL_NAME" ${PDK_ROOT}/sky130A/libs.tech/netgen/setup.tcl $REPORT_FILE -blackbox -list
+lvs "$REFERENCE_SPICE_FILE $REFERENCE_CELL_NAME" "$XSCHEM_SPICE_FILE $XSCHEM_CELL_NAME" $setup_file $REPORT_FILE -blackbox -list
+
+# Check if .report was created
+if {![file exists $REPORT_FILE]} {
+    puts stderr "ERROR: Report file \"$REPORT_FILE\" does not exist or could not be created."
+    exit 1
+}
 
 # Check for errors
 set error_signals {
