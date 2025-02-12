@@ -8,7 +8,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  build-and-release:
+  verify-pull-request:
     env:
       tools: ${{ github.workspace }}/tools
       git: ${{ github.workspace }}/git
