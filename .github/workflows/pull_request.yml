@@ -20,6 +20,19 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      - name: Identify Modified Schematics
+        run: |
+          echo "Finding modified .sch files..."
+          git fetch --deepen=${{ github.event.pull_request.commits }}
+          MODIFIED_SCH_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'schematics/**/*.sch')
+          if [ -z "$MODIFIED_SCH_FILES" ]; then
+            echo "No new or modified schematics found."
+            echo "MODIFIED_SCH_FILES=" >> "$GITHUB_ENV"
+          else
+            echo "Modified schematics: $MODIFIED_SCH_FILES"
+            echo "MODIFIED_SCH_FILES=$MODIFIED_SCH_FILES" >> "$GITHUB_ENV"
+          fi
+
       - name: Create build dirs
         run: |
           mkdir -p ${{ env.tools }}
@@ -64,19 +77,6 @@ jobs:
           volare-venv/bin/volare ls-remote --pdk sky130
           # https://github.com/RTimothyEdwards/open_pdks/tree/0fe599b2afb6708d281543108caf8310912f54af
           volare-venv/bin/volare enable 0fe599b2afb6708d281543108caf8310912f54af
-
-      - name: Identify Modified Schematics
-        run: |
-          echo "Finding modified .sch files..."
-          git fetch --deepen=${{ github.event.pull_request.commits }}
-          MODIFIED_SCH_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'schematics/**/*.sch')
-          if [ -z "$MODIFIED_SCH_FILES" ]; then
-            echo "No new or modified schematics found."
-            echo "MODIFIED_SCH_FILES=" >> "$GITHUB_ENV"
-          else
-            echo "Modified schematics: $MODIFIED_SCH_FILES"
-            echo "MODIFIED_SCH_FILES='$MODIFIED_SCH_FILES'" >> "$GITHUB_ENV"
-          fi
 
       - name: LVS
         run: |
