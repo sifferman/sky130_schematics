@@ -60,24 +60,8 @@ jobs:
           volare-venv/bin/python3 -m pip install --upgrade --no-cache-dir volare
           export PDK_ROOT=${{ env.tools }}/volare-pdks
           volare-venv/bin/volare ls-remote --pdk sky130
+          # https://github.com/RTimothyEdwards/open_pdks/tree/0fe599b2afb6708d281543108caf8310912f54af
           volare-venv/bin/volare enable 0fe599b2afb6708d281543108caf8310912f54af
-
-      - name: Identify Changed Schematics
-        if: github.event_name == 'pull_request'
-        id: changed_sch
-        run: |
-          echo "Finding modified .sch files..."
-          git fetch --deepen=${{ github.event.pull_request.commits }}
-          MODIFIED_SCH=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'schematics/**/*.sch')
-          if [ -z "$MODIFIED_SCH" ]; then
-            echo "No new or modified schematics found."
-            echo "SVG_FILES=" >> "$GITHUB_ENV"
-          else
-            echo "Modified schematics: $MODIFIED_SCH"
-            echo "$MODIFIED_SCH" > modified_sch_files.txt
-            SVG_FILES=$(echo "$MODIFIED_SCH" | sed 's|schematics/|svg/|g' | sed 's|.sch|.svg|g')
-            echo "SVG_FILES=$SVG_FILES" >> "$GITHUB_ENV"
-          fi
 
       - name: LVS
         run: |
@@ -88,14 +72,6 @@ jobs:
         run: |
           export PDK_ROOT=${{ env.tools }}/volare-pdks
           make all_svg
-
-      - name: Upload New SVGs as Artifact
-        if: github.event_name == 'pull_request' && env.SVG_FILES != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: new-svg-previews
-          path: ${{ env.SVG_FILES }}
-          retention-days: 7
 
       - name: Tar
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -121,33 +97,41 @@ jobs:
             svg/cells.tar.gz
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Comment on PR with New SVGs
+      - name: Identify Changed Schematics
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "Finding modified .sch files..."
+          git fetch --deepen=${{ github.event.pull_request.commits }}
+          MODIFIED_SCH=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'schematics/**/*.sch')
+          if [ -z "$MODIFIED_SCH" ]; then
+            echo "No new or modified schematics found."
+            echo "SVG_FILES=" >> "$GITHUB_ENV"
+          else
+            echo "Modified schematics: $MODIFIED_SCH"
+            echo "$MODIFIED_SCH" > modified_sch_files.txt
+            SVG_FILES=$(echo "$MODIFIED_SCH" | sed 's|schematics/|svg/|g' | sed 's|.sch|.svg|g')
+            echo "SVG_FILES=$SVG_FILES" >> "$GITHUB_ENV"
+          fi
+
+      - name: Upload New SVGs as Artifact
         if: github.event_name == 'pull_request' && env.SVG_FILES != ''
+        id: artifact-upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: svg-previews
+          path: ${{ env.SVG_FILES }}
+          retention-days: 7
+
+      - name: Comment on PR with SVG artifact link
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { owner, repo } = context.repo;
             const prNumber = context.issue.number;
-            const runId = context.runId;
-            const artifactUrl = `https://github.com/${owner}/${repo}/actions/runs/${runId}`;
-
-            // Read SVG files list from environment
-            const fs = require('fs');
-            const svgFiles = process.env.SVG_FILES.split(/\s+/).filter(f => f);
-
-            let commentBody = "### :art: New SVGs Generated :art:\n\n";
-            if (svgFiles.length === 0) {
-              commentBody += "No new SVGs were detected.\n";
-            } else {
-              commentBody += "The following SVGs were created/modified and can be previewed below:\n\n";
-              svgFiles.forEach(svg => {
-                const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${context.sha}/${svg}`;
-                commentBody += `![${svg}](${rawUrl})\n\n`;
-              });
-              commentBody += `Download all new SVGs from [this workflow run](${artifactUrl}).\n`;
-            }
-
+            const artifactUrl = `${{ steps.artifact-upload.outputs.artifact-url }}`;
+            const commentBody = `SVG previews have been generated and can be downloaded from [this workflow run](${artifactUrl}).`;
             github.rest.issues.createComment({
               owner,
               repo,
