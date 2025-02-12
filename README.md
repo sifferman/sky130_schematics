@@ -16,7 +16,7 @@ Automatically generated schematics are published here:
 Follow these steps to contribute a new schematic:
 
 0. **Install Required Tools**
-   * Follow the tool installation steps from the GitHub workflow file: <https://github.com/sifferman/sky130_schematics/blob/main/.github/workflows/build-and-release.yml>.
+   * Follow the tool installation steps from the GitHub workflow file: <https://github.com/sifferman/sky130_schematics/blob/main/.github/workflows/push.yml>.
    * Note that you should probably clone all required repos to a `"~/GitHub"` directory, and install your tools to a `"~/tools"` directory.
 
 1. **Set Up Your Branch**
