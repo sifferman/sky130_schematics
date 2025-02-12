@@ -67,8 +67,8 @@ jobs:
         id: changed_sch
         run: |
           echo "Finding modified .sch files..."
-          git fetch origin main
-          MODIFIED_SCH=$(git diff --name-only origin/main...HEAD -- 'schematics/**/*.sch')
+          git fetch --deepen=${{ github.event.pull_request.commits }}
+          MODIFIED_SCH=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'schematics/**/*.sch')
           if [ -z "$MODIFIED_SCH" ]; then
             echo "No new or modified schematics found."
             echo "SVG_FILES=" >> "$GITHUB_ENV"
