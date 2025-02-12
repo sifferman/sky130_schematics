@@ -77,6 +77,18 @@ jobs:
           cd svg
           tar -czf cells.tar.gz *
 
+      - name: Checkout sky130 cells repository
+        if: github.ref == 'refs/heads/main'
+        uses: actions/checkout@v4
+        with:
+          repository: efabless/skywater-pdk-libs-sky130_fd_sc_hd
+          path: sky130_fd_sc_hd
+
+      - name: Generate progress report
+        if: github.ref == 'refs/heads/main'
+        run: |
+          python3 docs/generate_progress_svg.py sky130_fd_sc_hd/cells schematics progress.svg
+
       - name: Create Tag
         if: github.ref == 'refs/heads/main'
         run: |
@@ -93,4 +105,5 @@ jobs:
           tag: ${{ env.TAG_NAME }}
           artifacts: |
             svg/cells.tar.gz
+            progress.svg
           token: ${{ secrets.GITHUB_TOKEN }}

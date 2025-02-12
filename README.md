@@ -1,6 +1,8 @@
 
 # SKY130 Schematics
 
+![Progress](https://github.com/sifferman/sky130_schematics/releases/latest/download/progress.svg?raw=true)
+
 This repository compiles verified visual schematics for all SKY130 High-Density Digital Standard Cells. Each schematic is validated with Layout Versus Schematic (LVS), ensuring 100% accuracy with the official SKY130 cells.
 
 The official SKY130 cells can be found here:
