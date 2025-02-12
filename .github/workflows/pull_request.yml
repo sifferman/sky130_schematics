@@ -30,7 +30,7 @@ jobs:
             echo "MODIFIED_SCH_FILES=" >> "$GITHUB_ENV"
           else
             echo "Modified schematics: $MODIFIED_SCH_FILES"
-            echo "MODIFIED_SCH_FILES=\"$MODIFIED_SCH_FILES\"" >> "$GITHUB_ENV"
+            printf "MODIFIED_SCH_FILES=%s" "$MODIFIED_SCH_FILES" >> "$GITHUB_ENV"
           fi
 
       - name: Create build dirs
