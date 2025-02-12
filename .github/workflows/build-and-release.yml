@@ -110,7 +110,7 @@ jobs:
             echo "Modified schematics: $MODIFIED_SCH"
             echo "$MODIFIED_SCH" > modified_sch_files.txt
             SVG_FILES=$(echo "$MODIFIED_SCH" | sed 's|schematics/|svg/|g' | sed 's|.sch|.svg|g')
-            echo "SVG_FILES=$SVG_FILES" >> "$GITHUB_ENV"
+            echo "SVG_FILES='$SVG_FILES'" >> "$GITHUB_ENV"
           fi
 
       - name: Upload New SVGs as Artifact
