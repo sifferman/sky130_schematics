@@ -25,6 +25,7 @@ jobs:
           echo "Finding modified .sch files..."
           git fetch --deepen=${{ github.event.pull_request.commits }}
           MODIFIED_SCH_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'schematics/**/*.sch')
+          MODIFIED_SCH_FILES=$(echo "$MODIFIED_SCH_FILES" | sed 's/[[:space:]]\+/ /g')
           if [ -z "$MODIFIED_SCH_FILES" ]; then
             echo "No new or modified schematics found."
             echo "MODIFIED_SCH_FILES=" >> "$GITHUB_ENV"
