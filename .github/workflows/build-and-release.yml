@@ -89,16 +89,13 @@ jobs:
           export PDK_ROOT=${{ env.tools }}/volare-pdks
           make all_svg
 
-      - name: Upload Each SVG as a Separate Artifact
+      - name: Upload New SVGs as Artifact
         if: github.event_name == 'pull_request' && env.SVG_FILES != ''
-        run: |
-          for svg in $SVG_FILES; do
-            svg_name=$(basename "$svg")
-            echo "Uploading $svg as an artifact..."
-            gh run upload-artifact "$svg_name" --path "$svg"
-          done
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: new-svg-previews
+          path: ${{ env.SVG_FILES }}
+          retention-days: 7
 
       - name: Tar
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -133,9 +130,9 @@ jobs:
             const { owner, repo } = context.repo;
             const prNumber = context.issue.number;
             const runId = context.runId;
-            const artifactBaseUrl = `https://github.com/${owner}/${repo}/actions/runs/${runId}/artifacts`;
+            const artifactUrl = `https://github.com/${owner}/${repo}/actions/runs/${runId}`;
 
-            // Read SVG files from the environment
+            // Read SVG files list from environment
             const fs = require('fs');
             const svgFiles = process.env.SVG_FILES.split(/\s+/).filter(f => f);
 
@@ -145,11 +142,10 @@ jobs:
             } else {
               commentBody += "The following SVGs were created/modified and can be previewed below:\n\n";
               svgFiles.forEach(svg => {
-                const svgName = svg.split('/').pop(); // Extract filename
-                const artifactUrl = `${artifactBaseUrl}/${svgName}`;
-                commentBody += `![](${artifactUrl})\n\n`;
+                const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${context.sha}/${svg}`;
+                commentBody += `![${svg}](${rawUrl})\n\n`;
               });
-              commentBody += `\n[View all artifacts here](${artifactBaseUrl}).\n`;
+              commentBody += `Download all new SVGs from [this workflow run](${artifactUrl}).\n`;
             }
 
             github.rest.issues.createComment({
