@@ -1,7 +1,7 @@
 name: Contributor Agreement
 on:
   push:
-  pull_request_target:
+  pull_request:
   workflow_dispatch:
 jobs:
   Test:
