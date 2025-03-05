@@ -1,0 +1,109 @@
+name: Test on Push
+
+on:
+  push:
+  workflow_call:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    env:
+      tools: ${{ github.workspace }}/tools
+      git: ${{ github.workspace }}/git
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create build dirs
+        run: |
+          mkdir -p ${{ env.tools }}
+          mkdir -p ${{ env.git }}
+
+      - name: Install apt packages
+        run: |
+          sudo add-apt-repository ppa:inkscape.dev/stable
+          sudo apt-get update
+          sudo apt-get install -y libtool-bin
+          sudo apt-get install -y tcl-dev tk-dev libcairo-dev
+          sudo apt-get install -y python3 libxaw7-dev libreadline6-dev
+          sudo apt-get install -y libxpm-dev libx11-dev flex
+          sudo apt-get install -y inkscape
+
+      - name: Install xschem
+        run: |
+          cd ${{ env.git }}
+          git clone --depth 1 https://github.com/StefanSchippers/xschem.git
+          cd xschem
+          ./configure --prefix=${{ env.tools }}/xschem
+          make -j`nproc`
+          make install
+          echo "${{ env.tools }}/xschem/bin" >> $GITHUB_PATH
+
+      - name: Install netgen
+        run: |
+          cd ${{ env.git }}
+          git clone --depth 1 https://github.com/RTimothyEdwards/netgen.git
+          cd netgen
+          ./configure --prefix=${{ env.tools }}/netgen
+          make -j`nproc`
+          make install
+          echo "${{ env.tools }}/netgen/bin" >> $GITHUB_PATH
+
+      - name: Generate PDK files
+        run: |
+          cd ${{ env.tools }}
+          python3 -m venv volare-venv
+          volare-venv/bin/python3 -m pip install --upgrade --no-cache-dir volare
+          export PDK_ROOT=${{ env.tools }}/volare-pdks
+          volare-venv/bin/volare ls-remote --pdk sky130
+          # https://github.com/RTimothyEdwards/open_pdks/tree/0fe599b2afb6708d281543108caf8310912f54af
+          volare-venv/bin/volare enable 0fe599b2afb6708d281543108caf8310912f54af
+
+      - name: LVS
+        run: |
+          export PDK_ROOT=${{ env.tools }}/volare-pdks
+          make all_lvs
+
+      - name: Generate SVGs
+        run: |
+          export PDK_ROOT=${{ env.tools }}/volare-pdks
+          make all_svg
+
+      - name: Tar
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd svg
+          tar -czf cells.tar.gz *
+
+      - name: Checkout sky130 cells repository
+        if: github.ref == 'refs/heads/main'
+        uses: actions/checkout@v4
+        with:
+          repository: efabless/skywater-pdk-libs-sky130_fd_sc_hd
+          path: sky130_fd_sc_hd
+
+      - name: Generate progress report
+        if: github.ref == 'refs/heads/main'
+        run: |
+          python3 docs/generate_progress_svg.py sky130_fd_sc_hd/cells schematics progress.svg
+
+      - name: Create Tag
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "TAG_NAME=$(date +%Y.%m.%d.%H.%M)" >> "$GITHUB_ENV"
+          git tag ${{ env.TAG_NAME }}
+          git push origin ${{ env.TAG_NAME }}
+
+      - name: Create Release
+        if: github.ref == 'refs/heads/main'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: True
+          omitBody: True
+          tag: ${{ env.TAG_NAME }}
+          artifacts: |
+            svg/cells.tar.gz
+            progress.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
