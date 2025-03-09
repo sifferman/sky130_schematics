@@ -46,7 +46,7 @@ N 30 60 80 60 {lab=#net1}
 N -70 300 40 300 {lab=VGND}
 N 70 -140 100 -140 {lab=VPWR}
 C {ipin.sym} -330 -80 0 0 {name=p1 lab=A3}
-C {opin.sym} -270 -40 0 0 {name=p2 lab=X}
+C {opin.sym} -280 -120 0 0 {name=p2 lab=X}
 C {ipin.sym} -330 -60 0 0 {name=p18 lab=B1}
 C {ipin.sym} -330 -40 0 0 {name=p19 lab=VGND}
 C {ipin.sym} -330 -20 0 0 {name=p20 lab=VNB}

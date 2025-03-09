@@ -36,7 +36,7 @@ model=pfet_01v8_hvt
 spiceprefix=X
 }
 C {ipin.sym} -330 -80 0 0 {name=p1 lab=A3}
-C {opin.sym} -270 -40 0 0 {name=p2 lab=X}
+C {opin.sym} -280 -120 0 0 {name=p2 lab=X}
 C {lab_pin.sym} 180 -50 2 0 {name=p5 sig_type=std_logic lab=VPB}
 C {lab_pin.sym} 180 30 2 0 {name=p8 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} 180 -80 2 0 {name=p14 sig_type=std_logic lab=VPWR}
