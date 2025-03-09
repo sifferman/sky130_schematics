@@ -23,30 +23,20 @@ N -140 150 -0 150 {lab=VGND}
 N 0 150 130 150 {lab=VGND}
 N 60 -10 130 -10 {lab=#net1}
 N 180 -10 200 -10 {lab=X}
-C {sky130_fd_pr/nfet_01v8.sym} 160 30 2 1 {name=M0
-W=650000u
-L=150000u
-model=nfet_01v8
-spiceprefix=X
-}
-C {sky130_fd_pr/pfet_01v8_hvt.sym} 160 -50 2 1 {name=M5
-W=1e+06u
-L=150000u
-model=pfet_01v8_hvt
-spiceprefix=X
-}
+C {ipin.sym} -330 -120 0 0 {name=p35 lab=A1}
+C {ipin.sym} -330 -100 0 0 {name=p34 lab=A2}
 C {ipin.sym} -330 -80 0 0 {name=p1 lab=A3}
-C {opin.sym} -280 -120 0 0 {name=p2 lab=X}
-C {lab_pin.sym} 180 -50 2 0 {name=p5 sig_type=std_logic lab=VPB}
-C {lab_pin.sym} 180 30 2 0 {name=p8 sig_type=std_logic lab=VNB}
-C {lab_pin.sym} 180 -80 2 0 {name=p14 sig_type=std_logic lab=VPWR}
-C {lab_pin.sym} 180 60 2 0 {name=p15 sig_type=std_logic lab=VGND}
-C {lab_pin.sym} 200 -10 2 0 {name=p17 sig_type=std_logic lab=X}
 C {ipin.sym} -330 -60 0 0 {name=p18 lab=B1}
 C {ipin.sym} -330 -40 0 0 {name=p19 lab=VGND}
 C {ipin.sym} -330 -20 0 0 {name=p20 lab=VNB}
 C {ipin.sym} -330 0 0 0 {name=p21 lab=VPB}
 C {ipin.sym} -330 20 0 0 {name=p22 lab=VPWR}
+C {opin.sym} -280 -120 0 0 {name=p2 lab=X}
+C {lab_pin.sym} 180 -50 2 0 {name=p5 sig_type=std_logic lab=VPB}
+C {lab_pin.sym} 200 -10 2 0 {name=p17 sig_type=std_logic lab=X}
+C {lab_pin.sym} 180 30 2 0 {name=p8 sig_type=std_logic lab=VNB}
+C {lab_pin.sym} 180 -80 2 0 {name=p14 sig_type=std_logic lab=VPWR}
+C {lab_pin.sym} 180 60 2 0 {name=p15 sig_type=std_logic lab=VGND}
 C {sky130_fd_pr/pfet_01v8_hvt.sym} 40 -120 2 1 {name=M1
 W=1e+06u
 L=150000u
@@ -113,5 +103,15 @@ C {lab_pin.sym} -180 120 0 0 {name=p32 sig_type=std_logic lab=A1}
 C {lab_pin.sym} -110 -60 0 0 {name=p33 sig_type=std_logic lab=A3}
 C {lab_pin.sym} -110 -120 0 0 {name=p10 sig_type=std_logic lab=A2}
 C {lab_pin.sym} -110 -180 0 0 {name=p7 sig_type=std_logic lab=A1}
-C {ipin.sym} -330 -100 0 0 {name=p34 lab=A2}
-C {ipin.sym} -330 -120 0 0 {name=p35 lab=A1}
+C {sky130_fd_pr/pfet_01v8_hvt.sym} 160 -50 2 1 {name=M5
+W=1e+06u
+L=150000u
+model=pfet_01v8_hvt
+spiceprefix=X
+}
+C {sky130_fd_pr/nfet_01v8.sym} 160 30 2 1 {name=M0
+W=650000u
+L=150000u
+model=nfet_01v8
+spiceprefix=X
+}
