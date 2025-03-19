@@ -4,45 +4,38 @@ K {}
 V {}
 S {}
 E {}
-N 650 -130 650 -70 {lab=a_109_47#}
+N 650 -130 650 -70 {lab=#net1}
 N 690 -100 810 -100 {lab=X}
-N 650 -290 650 -230 {lab=a_109_47#}
+N 650 -290 650 -230 {lab=#net1}
 N 690 -260 810 -260 {lab=X}
-N 650 70 650 130 {lab=a_109_47#}
+N 650 70 650 130 {lab=#net1}
 N 690 100 810 100 {lab=X}
-N 650 230 650 290 {lab=a_109_47#}
+N 650 230 650 290 {lab=#net1}
 N 690 260 810 260 {lab=X}
 N 80 0 120 0 {lab=A_N}
 N 120 -30 120 30 {lab=A_N}
-N 160 0 280 0 {lab=#net1}
-N 360 -140 480 -140 {lab=VPWR}
-N 420 -160 420 -140 {lab=VPWR}
-N 360 -80 480 -80 {lab=a_109_47#}
-N 420 -10 420 0 {lab=a_109_47#}
-N 420 -20 420 -10 {lab=a_109_47#}
-N 420 -30 420 -20 {lab=a_109_47#}
-N 420 -40 420 -30 {lab=a_109_47#}
-N 420 -50 420 -40 {lab=a_109_47#}
-N 420 -60 420 -50 {lab=a_109_47#}
-N 420 -70 420 -60 {lab=a_109_47#}
-N 420 -80 420 -70 {lab=a_109_47#}
-N 420 0 420 80 {lab=a_109_47#}
-N 420 0 610 0 {lab=a_109_47#}
-N 610 0 630 0 {lab=a_109_47#}
-N 630 -100 630 0 {lab=a_109_47#}
-N 630 -100 650 -100 {lab=a_109_47#}
-N 630 -260 630 -100 {lab=a_109_47#}
-N 630 -260 650 -260 {lab=a_109_47#}
-N 630 0 630 100 {lab=a_109_47#}
-N 630 100 650 100 {lab=a_109_47#}
-N 630 100 630 260 {lab=a_109_47#}
-N 630 260 650 260 {lab=a_109_47#}
-N 420 140 420 180 {lab=#net2}
-N 280 0 310 0 {lab=#net1}
-N 310 -110 310 0 {lab=#net1}
-N 310 -110 320 -110 {lab=#net1}
-N 310 0 310 110 {lab=#net1}
-N 310 110 380 110 {lab=#net1}
+N 160 0 280 0 {lab=#net2}
+N 360 -100 480 -100 {lab=VPWR}
+N 420 -120 420 -100 {lab=VPWR}
+N 360 -40 480 -40 {lab=#net1}
+N 420 0 610 0 {lab=#net1}
+N 610 0 630 0 {lab=#net1}
+N 630 -100 630 0 {lab=#net1}
+N 630 -100 650 -100 {lab=#net1}
+N 630 -260 630 -100 {lab=#net1}
+N 630 -260 650 -260 {lab=#net1}
+N 630 0 630 100 {lab=#net1}
+N 630 100 650 100 {lab=#net1}
+N 630 100 630 260 {lab=#net1}
+N 630 260 650 260 {lab=#net1}
+N 420 100 420 140 {lab=#net3}
+N 280 0 310 0 {lab=#net2}
+N 420 -40 420 0 {lab=#net1}
+N 420 0 420 40 {lab=#net1}
+N 310 -70 310 -0 {lab=#net2}
+N 310 -70 320 -70 {lab=#net2}
+N 310 0 310 70 {lab=#net2}
+N 310 70 380 70 {lab=#net2}
 C {ipin.sym} -120 -40 0 0 {name=p0 lab=A_N}
 C {ipin.sym} -120 -20 0 0 {name=p1 lab=B}
 C {ipin.sym} -120 0 0 0 {name=p2 lab=VGND}
@@ -135,35 +128,35 @@ spiceprefix=X
 C {lab_pin.sym} 160 30 2 0 {name=p33 sig_type=std_logic lab=VNB}
 C {lab_pin.sym} 160 60 2 0 {name=p34 sig_type=std_logic lab=VGND}
 C {lab_pin.sym} 80 0 0 0 {name=p35 sig_type=std_logic lab=A_N}
-C {sky130_fd_pr/pfet_01v8_hvt.sym} 340 -110 0 0 {name=M10
+C {sky130_fd_pr/pfet_01v8_hvt.sym} 340 -70 0 0 {name=M10
 W=1e+06u
 L=150000u
 model=pfet_01v8_hvt
 spiceprefix=X
 }
-C {lab_pin.sym} 360 -110 2 0 {name=p37 sig_type=std_logic lab=VPB}
-C {lab_pin.sym} 420 -160 2 0 {name=p38 sig_type=std_logic lab=VPWR}
-C {sky130_fd_pr/pfet_01v8_hvt.sym} 460 -110 0 0 {name=M11
+C {lab_pin.sym} 360 -70 2 0 {name=p37 sig_type=std_logic lab=VPB}
+C {lab_pin.sym} 420 -120 2 0 {name=p38 sig_type=std_logic lab=VPWR}
+C {sky130_fd_pr/pfet_01v8_hvt.sym} 460 -70 0 0 {name=M11
 W=1e+06u
 L=150000u
 model=pfet_01v8_hvt
 spiceprefix=X
 }
-C {lab_pin.sym} 480 -110 2 0 {name=p41 sig_type=std_logic lab=VPB}
-C {lab_pin.sym} 440 -110 0 0 {name=p44 sig_type=std_logic lab=B}
-C {sky130_fd_pr/nfet_01v8.sym} 400 110 0 0 {name=M8
+C {lab_pin.sym} 480 -70 2 0 {name=p41 sig_type=std_logic lab=VPB}
+C {lab_pin.sym} 440 -70 0 0 {name=p44 sig_type=std_logic lab=B}
+C {sky130_fd_pr/nfet_01v8.sym} 400 70 0 0 {name=M8
 W=650000u
 L=150000u
 model=nfet_01v8
 spiceprefix=X
 }
-C {lab_pin.sym} 420 110 2 0 {name=p45 sig_type=std_logic lab=VNB}
-C {sky130_fd_pr/nfet_01v8.sym} 400 210 0 0 {name=M12
+C {lab_pin.sym} 420 70 2 0 {name=p45 sig_type=std_logic lab=VNB}
+C {sky130_fd_pr/nfet_01v8.sym} 400 170 0 0 {name=M12
 W=650000u
 L=150000u
 model=nfet_01v8
 spiceprefix=X
 }
-C {lab_pin.sym} 420 210 2 0 {name=p49 sig_type=std_logic lab=VNB}
-C {lab_pin.sym} 420 240 2 0 {name=p51 sig_type=std_logic lab=VGND}
-C {lab_pin.sym} 380 210 0 0 {name=p52 sig_type=std_logic lab=B}
+C {lab_pin.sym} 420 170 2 0 {name=p49 sig_type=std_logic lab=VNB}
+C {lab_pin.sym} 420 200 2 0 {name=p51 sig_type=std_logic lab=VGND}
+C {lab_pin.sym} 380 170 0 0 {name=p52 sig_type=std_logic lab=B}
