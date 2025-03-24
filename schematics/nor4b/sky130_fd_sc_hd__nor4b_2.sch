@@ -109,15 +109,15 @@ L=150000u
 model=nfet_01v8
 spiceprefix=X
 }
-C {ipin.sym} -410 -390 0 0 {name=p1 lab=A}
-C {ipin.sym} -410 -370 0 0 {name=p18 lab=B}
-C {ipin.sym} -410 -350 0 0 {name=p14 lab=C}
-C {ipin.sym} -410 -330 0 0 {name=p26 lab=D_N}
-C {ipin.sym} -410 -310 0 0 {name=p19 lab=VGND}
-C {ipin.sym} -410 -290 0 0 {name=p20 lab=VNB}
-C {ipin.sym} -410 -270 0 0 {name=p21 lab=VPB}
-C {ipin.sym} -410 -250 0 0 {name=p22 lab=VPWR}
-C {opin.sym} -380 -390 0 0 {name=p2 lab=Y}
+C {ipin.sym} -590 -400 0 0 {name=p1 lab=A}
+C {ipin.sym} -590 -380 0 0 {name=p18 lab=B}
+C {ipin.sym} -590 -360 0 0 {name=p14 lab=C}
+C {ipin.sym} -590 -340 0 0 {name=p26 lab=D_N}
+C {ipin.sym} -590 -320 0 0 {name=p19 lab=VGND}
+C {ipin.sym} -590 -300 0 0 {name=p20 lab=VNB}
+C {ipin.sym} -590 -280 0 0 {name=p21 lab=VPB}
+C {ipin.sym} -590 -260 0 0 {name=p22 lab=VPWR}
+C {opin.sym} -560 -400 0 0 {name=p2 lab=Y}
 C {lab_pin.sym} -260 -370 2 0 {name=p3 sig_type=std_logic lab=VPB}
 C {lab_pin.sym} -260 -280 2 0 {name=p4 sig_type=std_logic lab=VPB}
 C {lab_pin.sym} -500 10 2 0 {name=p6 sig_type=std_logic lab=VNB}
