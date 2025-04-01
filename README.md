@@ -33,11 +33,11 @@ Follow these steps to contribute a new schematic:
 
 3. **Generate A Schematic Template**
    * You can generate a template schematic by running `make spice2sch/{CELL/NAME}.sch` where `{CELL/NAME}` denotes the cell name from an official SPICE file. Then, you can move that cell into `"schematics/{CELL/NAME}.sch"` to begin working on it.
-   * Example with `or2/sky130_fd_sc_hd__or2_0`:
-     * Official SPICE file: [`"sky130_fd_sc_hd/cells/or2/sky130_fd_sc_hd__or2_0.spice"`](https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/blob/master/cells/or2/sky130_fd_sc_hd__or2_0.spice)
-     * Template file: `spice2sch/or2/sky130_fd_sc_hd__or2_0.sch`
-     * Your schematic file: [`"schematics/or2/sky130_fd_sc_hd__or2_0.sch"`](https://github.com/sifferman/sky130_schematics/blob/main/schematics/or2/sky130_fd_sc_hd__or2_0.sch)
    * The schematic names must be mirrored with the Official SKY130 SPICE file for the Makefile to function properly.
+   * Example with `or2/sky130_fd_sc_hd__or2_0`:
+     * Official SPICE file to reference: [`"sky130_fd_sc_hd/cells/or2/sky130_fd_sc_hd__or2_0.spice"`](https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/blob/master/cells/or2/sky130_fd_sc_hd__or2_0.spice)
+     * Generate a schematic template with: `make spice2sch/or2/sky130_fd_sc_hd__or2_0.sch`
+     * Move the template file to: [`"schematics/or2/sky130_fd_sc_hd__or2_0.sch"`](https://github.com/sifferman/sky130_schematics/blob/main/schematics/or2/sky130_fd_sc_hd__or2_0.sch)
 
 4. **Edit in xschem**
    * You can now open a schematic with `xschem schematics/{CELL/NAME}.sch`. Example: `xschem schematics/or2/sky130_fd_sc_hd__or2_0.sch`
