@@ -26,40 +26,50 @@ Follow these steps to contribute a new schematic:
    * Create a new branch off `main` for your work.
 
 2. **Claim a Cell**
-   * Choose a cell to implement and create a GitHub Issue to claim it: <https://github.com/sifferman/sky130_schematics/issues>
+   * Choose a cell to implement from the SKY130 PDK: [Cells List](https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/tree/master/cells).
+   * Ensure the cell has not already been implemented: [Finished SKY130 Schematics](https://github.com/sifferman/sky130_schematics/tree/main/schematics).
+   * Ensure the cell is not currently being worked on: [Open Issues and PRs](https://github.com/sifferman/sky130_schematics/issues?q=state%3Aopen%20).
+   * Create a GitHub Issue that denotes the cell you want to work on: <https://github.com/sifferman/sky130_schematics/issues>.
 
-3. **Prepare Your Schematic File**
-   * Mirror the official SKY130 cell's path and filename in this repository.
-     Example:
-     * Official SPICE file: [`sky130_fd_sc_hd/cells/or2/sky130_fd_sc_hd__or2_0.spice`](https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/blob/master/cells/or2/sky130_fd_sc_hd__or2_0.spice)
-     * Your schematic file: [`schematics/or2/sky130_fd_sc_hd__or2_0.sch`](https://github.com/sifferman/sky130_schematics/blob/main/schematics/or2/sky130_fd_sc_hd__or2_0.sch)
-   * This naming consistency is required for LVS checks.
+3. **Generate A Schematic Template**
+   * You can generate a template schematic by running `make spice2sch/{CELL/NAME}.sch` where `{CELL/NAME}` denotes the cell name from an official SPICE file. Then, you can move that cell into `"schematics/{CELL/NAME}.sch"` to begin working on it.
+   * Example with `or2/sky130_fd_sc_hd__or2_0`:
+     * Official SPICE file: [`"sky130_fd_sc_hd/cells/or2/sky130_fd_sc_hd__or2_0.spice"`](https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/blob/master/cells/or2/sky130_fd_sc_hd__or2_0.spice)
+     * Template file: `spice2sch/or2/sky130_fd_sc_hd__or2_0.sch`
+     * Your schematic file: [`"schematics/or2/sky130_fd_sc_hd__or2_0.sch"`](https://github.com/sifferman/sky130_schematics/blob/main/schematics/or2/sky130_fd_sc_hd__or2_0.sch)
+   * The schematic names must be mirrored with the Official SKY130 SPICE file for the Makefile to function properly.
 
-4. **Start with a Template (Optional)**
-   * Copy an existing schematic into your new file to use as a starting point.
+4. **Edit in xschem**
+   * You can now open a schematic with `xschem schematics/{CELL/NAME}.sch`. Example: `xschem schematics/or2/sky130_fd_sc_hd__or2_0.sch`
+   * Note that `xschem` must be opened from the root directory of this project to ensure [`xschemrc`](https://github.com/sifferman/sky130_schematics/blob/main/xschemrc) file is properly loaded.
+   * Modify the schematic to make it readable, symmetrical, and aesthetically consistent.
+      * PMOS should always appear above NMOS.
+      * All intermediate labels should either be removed, or renamed to something more useful. (I.e. an inverted `A` net can be named `A_N`)
+      * Wire length should generally be kept short, unless it significantly improves readability.
+      * Prefer copying an intermediate label if it means that wires don't cross.
+      * Fingers (transistors in parallel with the same port connections) should be grouped together and facing the same direction.
+      * If lots of FETs appear in parallel, they should be cascaded so the schematic becomes less wide. Example:
+         * `nand4/sky130_fd_sc_hd__nand4_4`
+         * `nand4b/sky130_fd_sc_hd__nand4b_4`
+         * `nand4bb/sky130_fd_sc_hd__nand4bb_4`
+         * `nor2/sky130_fd_sc_hd__nor2_8`
+         * etc...
 
-5. **Edit in xschem**
-   * Open `xschem` from the root directory of this project to ensure the provided [`xschemrc`](https://github.com/sifferman/sky130_schematics/blob/main/xschemrc) file is loaded.
-
-6. **Create the Schematic**
-   * Design the schematic in `xschem` based on the SPICE model for your chosen cell.
-   * You can use these auto-generated schematics for guidance, but note that their quality varies: <https://github.com/sifferman/sky130_netlistsvg/releases/latest>.
-
-7. **Verify with LVS**
+5. **Verify with LVS**
    * Run `` make all_lvs -j`nproc` `` to check your schematic.
    * If it passes, your schematic matches the official SKY130 SPICE model.
-   * If it fails, review the report in `"lvs/**/*.failed"` for debugging.
+   * If it fails, review the report in `"lvs/{CELL/NAME}.failed"` for debugging.
 
-8. **Polish the Design**
-   * Clean up your schematic to make it readable, symmetrical, and aesthetically consistent.
+6. **Polish the Design**
    * Please check the existing schematics as reference.
    * You can see the generated SVG by running `` make all_svg -j`nproc` ``.
 
-9. **Submit a Pull Request**
+7. **Submit a Pull Request**
    * Once your schematic passes LVS, submit a pull request for review.
    * Feedback will be provided to further refine your design.
 
 ---
 
 ### Note on LVS
+
 **LVS (Layout Versus Schematic)** is typically used to verify that a silicon layout matches a circuit schematic. In this project, we use LVS to ensure the schematic aligns with the official SKY130 SPICE model.

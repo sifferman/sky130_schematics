@@ -5,6 +5,8 @@ SCHEMATICS := $(shell find schematics -name "*.sch")
 ALL_SVG_FILES := $(patsubst schematics/%.sch,svg/%.svg,$(SCHEMATICS))
 ALL_LVS_FILES := $(patsubst schematics/%.sch,lvs/%.report,$(SCHEMATICS))
 
+SPICE2SCH := PYTHONPATH=third_party/spice2sch/src python3 -m spice2sch
+
 all_svg: ${ALL_SVG_FILES}
 all_lvs: ${ALL_LVS_FILES}
 
@@ -37,5 +39,9 @@ references/%.spice:
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/${REPO}/master/cells/$*.spice
 
+spice2sch/%.sch: references/%.spice
+	mkdir -p $(dir $@)
+	${SPICE2SCH} -i $< -o $@
+
 clean:
-	rm -rf logs lvs netlists references svg
+	rm -rf logs lvs netlists references svg spice2sch
