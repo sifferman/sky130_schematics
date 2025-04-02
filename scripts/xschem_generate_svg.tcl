@@ -4,15 +4,19 @@ set log_file [xschem get current_dirname]/logs/$::env(SCHEMATIC).svg.log
 
 xschem load schematics/$::env(SCHEMATIC).sch
 
+set error_signals {
+    "*Symbol not found*"
+    "*SKIPPING*"
+}
 set log_content [read [open $log_file r]]
-set symbol_error 0
-foreach line [split $log_content "\n"] {
-    if {[string match "*Symbol not found*" $line]} {
-        puts stderr "Error: $line"
-        set symbol_error 1
+set found_error 0
+foreach signal $error_signals {
+    if {[string match $signal $log_content]} {
+        puts stderr "Error: $signal"
+        set found_error 1
     }
 }
-if { $symbol_error } {exit 1}
+if { $found_error } {exit 1}
 
 
 # Black and White
