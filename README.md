@@ -18,8 +18,9 @@ See the progress [here](https://github.com/sifferman/sky130_schematics/releases/
 Follow these steps to contribute a new schematic:
 
 0. **Install Required Tools**
-   * Follow the tool installation steps from the GitHub workflow file: <https://github.com/sifferman/sky130_schematics/blob/main/.github/workflows/push.yml>.
-   * Note that you should probably clone all required repos to a `"~/GitHub"` directory, and install your tools to a `"~/tools"` directory.
+   * Clone this repo.
+   * Run `git submodule update --init --recursive`
+   * Follow the tool installation steps from the GitHub workflow file: <https://github.com/sifferman/sky130_schematics/blob/main/.github/workflows/push.yml>. Note that you should probably clone all required repos to a `"~/GitHub"` directory, and install your tools to a `"~/tools"` directory.
 
 1. **Set Up Your Branch**
    * Clone this repository and ensure your local `main` branch is up to date.
