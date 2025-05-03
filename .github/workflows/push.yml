@@ -27,6 +27,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libtool-bin
           sudo apt-get install -y tcl-dev tk-dev libcairo-dev
+          sudo apt-get install -y libjpeg-dev libxcb1-dev
           sudo apt-get install -y python3 libxaw7-dev libreadline6-dev
           sudo apt-get install -y libxpm-dev libx11-dev flex
           sudo apt-get install -y inkscape
