@@ -55,8 +55,9 @@ jobs:
         if: env.MODIFIED_SCH_FILES != ''
         run: |
           cd ${{ env.git }}
-          git clone --depth 1 https://github.com/StefanSchippers/xschem.git
+          git clone https://github.com/StefanSchippers/xschem.git
           cd xschem
+          git checkout ca6fb60ce79e2a3b2f49179c473c9dddd37dfdf9
           ./configure --prefix=${{ env.tools }}/xschem
           make -j`nproc`
           make install
