@@ -25,13 +25,11 @@ jobs:
         run: |
           sudo add-apt-repository ppa:inkscape.dev/stable
           sudo apt-get update
-          sudo apt-get -y upgrade
           sudo apt-get install -y libtool-bin
           sudo apt-get install -y tcl-dev tk-dev libcairo-dev
           sudo apt-get install -y python3 libxaw7-dev libreadline6-dev
           sudo apt-get install -y libxpm-dev libx11-dev flex
           sudo apt-get install -y inkscape
-          sudo apt-get install -y libcairo2-dev m4 tcsh
 
       - name: Install xschem
         run: |

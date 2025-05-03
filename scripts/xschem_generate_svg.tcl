@@ -34,7 +34,7 @@ set transparent_svg 1
 set draw_grid 0
 
 # Remove symbol text
-# xschem set sym_txt 0
+xschem set sym_txt 0
 
 # Remove pin layer
 # set enable_layer([xschem get pinlayer]) 0
