@@ -47,17 +47,18 @@ jobs:
         run: |
           sudo add-apt-repository ppa:inkscape.dev/stable
           sudo apt-get update
+          sudo apt-get -y upgrade
           sudo apt-get install -y tk-dev
           sudo apt-get install -y libxpm-dev
           sudo apt-get install -y inkscape
+          sudo apt-get install -y libcairo2-dev m4 tcsh
 
       - name: Install xschem
         if: env.MODIFIED_SCH_FILES != ''
         run: |
           cd ${{ env.git }}
-          git clone https://github.com/StefanSchippers/xschem.git
+          git clone --depth 1 https://github.com/StefanSchippers/xschem.git
           cd xschem
-          git checkout ca6fb60ce79e2a3b2f49179c473c9dddd37dfdf9
           ./configure --prefix=${{ env.tools }}/xschem
           make -j`nproc`
           make install
