@@ -57,14 +57,13 @@ jobs:
       - name: Install xschem
         if: env.MODIFIED_SCH_FILES != ''
         run: |
-          sudo apt-get install -y xschem
-          # cd ${{ env.git }}
-          # git clone --depth 1 https://github.com/StefanSchippers/xschem.git
-          # cd xschem
-          # ./configure --prefix=${{ env.tools }}/xschem
-          # make -j`nproc`
-          # make install
-          # echo "${{ env.tools }}/xschem/bin" >> $GITHUB_PATH
+          cd ${{ env.git }}
+          git clone --depth 1 https://github.com/StefanSchippers/xschem.git
+          cd xschem
+          ./configure --prefix=${{ env.tools }}/xschem
+          make -j`nproc`
+          make install
+          echo "${{ env.tools }}/xschem/bin" >> $GITHUB_PATH
 
       - name: Install netgen
         if: env.MODIFIED_SCH_FILES != ''
