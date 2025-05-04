@@ -34,7 +34,7 @@ jobs:
       - name: Install xschem
         run: |
           cd ${{ env.git }}
-          git clone --depth 1 https://github.com/StefanSchippers/xschem.git
+          git clone --branch 3.4.6 --depth 1 https://github.com/StefanSchippers/xschem.git
           cd xschem
           ./configure --prefix=${{ env.tools }}/xschem
           make -j`nproc`
