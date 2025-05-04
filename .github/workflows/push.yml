@@ -34,13 +34,14 @@ jobs:
 
       - name: Install xschem
         run: |
-          cd ${{ env.git }}
-          git clone --depth 1 https://github.com/StefanSchippers/xschem.git
-          cd xschem
-          ./configure --prefix=${{ env.tools }}/xschem
-          make -j`nproc`
-          make install
-          echo "${{ env.tools }}/xschem/bin" >> $GITHUB_PATH
+          sudo apt-get install -y xschem
+          # cd ${{ env.git }}
+          # git clone --depth 1 https://github.com/StefanSchippers/xschem.git
+          # cd xschem
+          # ./configure --prefix=${{ env.tools }}/xschem
+          # make -j`nproc`
+          # make install
+          # echo "${{ env.tools }}/xschem/bin" >> $GITHUB_PATH
 
       - name: Install netgen
         run: |
