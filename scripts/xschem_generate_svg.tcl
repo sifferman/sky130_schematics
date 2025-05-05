@@ -33,12 +33,14 @@ set transparent_svg 1
 # Disable grid lines
 set draw_grid 0
 
-# Remove symbol text
-# set enable_layer([xschem get textlayer]) 0
-xschem set sym_txt 0
+# Disable all layers by default
+foreach key [array names enable_layer] {
+    set enable_layer($key) 0
+}
 
-# Remove pin layer
-set enable_layer([xschem get pinlayer]) 0
+# Enable labels and symbols
+set enable_layer([xschem get wirelayer]) 1
+set enable_layer(4) 1
 xschem enable_layers
 
 
