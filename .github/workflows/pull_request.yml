@@ -12,7 +12,7 @@ jobs:
     env:
       tools: ${{ github.workspace }}/tools
       git: ${{ github.workspace }}/git
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Verify Action is Run on a Pull Request Target Event
         if: github.event_name != 'pull_request_target'
@@ -47,11 +47,8 @@ jobs:
         run: |
           sudo add-apt-repository ppa:inkscape.dev/stable
           sudo apt-get update
-          sudo apt-get install -y libtool-bin
-          sudo apt-get install -y tcl-dev tk-dev libcairo-dev libxrender-dev
-          sudo apt-get install -y libjpeg-dev libxcb1-dev
-          sudo apt-get install -y python3 libxaw7-dev libreadline6-dev
-          sudo apt-get install -y libxpm-dev libx11-dev flex
+          sudo apt-get install -y tk-dev
+          sudo apt-get install -y libxpm-dev
           sudo apt-get install -y inkscape
 
       - name: Install xschem
