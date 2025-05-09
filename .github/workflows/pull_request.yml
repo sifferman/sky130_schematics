@@ -77,24 +77,24 @@ jobs:
         if: env.MODIFIED_SCH_FILES != ''
         run: |
           cd ${{ env.tools }}
-          python3 -m venv volare-venv
-          volare-venv/bin/python3 -m pip install --upgrade --no-cache-dir volare
-          export PDK_ROOT=${{ env.tools }}/volare-pdks
-          volare-venv/bin/volare ls-remote --pdk sky130
+          python3 -m venv ciel-venv
+          ciel-venv/bin/python3 -m pip install --upgrade --no-cache-dir ciel
+          export PDK_ROOT=${{ env.tools }}/ciel-pdks
+          ciel-venv/bin/ciel ls-remote --pdk sky130
           # https://github.com/RTimothyEdwards/open_pdks/tree/0fe599b2afb6708d281543108caf8310912f54af
-          volare-venv/bin/volare enable 0fe599b2afb6708d281543108caf8310912f54af
+          ciel-venv/bin/ciel enable --pdk sky130 0fe599b2afb6708d281543108caf8310912f54af
 
       - name: LVS
         if: env.MODIFIED_SCH_FILES != ''
         run: |
-          export PDK_ROOT=${{ env.tools }}/volare-pdks
+          export PDK_ROOT=${{ env.tools }}/ciel-pdks
           LVS_FILES=$(echo "$MODIFIED_SCH_FILES" | sed 's|schematics/|lvs/|g' | sed 's|.sch|.report|g')
           make $LVS_FILES
 
       - name: Generate SVGs
         if: env.MODIFIED_SCH_FILES != ''
         run: |
-          export PDK_ROOT=${{ env.tools }}/volare-pdks
+          export PDK_ROOT=${{ env.tools }}/ciel-pdks
           SVG_FILES=$(echo "$MODIFIED_SCH_FILES" | sed 's|schematics/|svg/|g' | sed 's|.sch|.svg|g')
           make $SVG_FILES
 

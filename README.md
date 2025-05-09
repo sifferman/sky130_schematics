@@ -4,7 +4,7 @@
 This repository compiles verified visual schematics for all SKY130 High-Density Digital Standard Cells. Each schematic is validated with Layout Versus Schematic (LVS), ensuring 100% accuracy with the official SKY130 cells.
 
 The official SKY130 cells can be found here:
-<https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/tree/master/cells>
+<https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_hd/tree/master/cells>
 
 Automatically generated schematics are published here:
 <https://github.com/sifferman/sky130_schematics/releases/latest>
@@ -27,7 +27,7 @@ Follow these steps to contribute a new schematic:
    * Create a new branch off `main` for your work.
 
 2. **Claim a Cell**
-   * Choose a cell to implement from the SKY130 PDK: [Cells List](https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/tree/master/cells).
+   * Choose a cell to implement from the SKY130 PDK: [Cells List](https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_hd/tree/master/cells).
    * Ensure the cell has not already been implemented: [Finished SKY130 Schematics](https://github.com/sifferman/sky130_schematics/tree/main/schematics).
    * Ensure the cell is not currently being worked on: [Open Issues and PRs](https://github.com/sifferman/sky130_schematics/issues?q=state%3Aopen%20).
    * Create a GitHub Issue that denotes the cell you want to work on: <https://github.com/sifferman/sky130_schematics/issues>.
@@ -36,7 +36,7 @@ Follow these steps to contribute a new schematic:
    * You can generate a template schematic by running `make spice2sch/{CELL/NAME}.sch` where `{CELL/NAME}` denotes the cell name from an official SPICE file. Then, you can move that cell into `"schematics/{CELL/NAME}.sch"` to begin working on it.
    * The schematic names must be mirrored with the Official SKY130 SPICE file for the Makefile to function properly.
    * Example with `or2/sky130_fd_sc_hd__or2_0`:
-     * Official SPICE file to reference: [`"sky130_fd_sc_hd/cells/or2/sky130_fd_sc_hd__or2_0.spice"`](https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd/blob/master/cells/or2/sky130_fd_sc_hd__or2_0.spice)
+     * Official SPICE file to reference: [`"sky130_fd_sc_hd/cells/or2/sky130_fd_sc_hd__or2_0.spice"`](https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_hd/blob/master/cells/or2/sky130_fd_sc_hd__or2_0.spice)
      * Generate a schematic template with: `make spice2sch/or2/sky130_fd_sc_hd__or2_0.sch`
      * Move the template file to: [`"schematics/or2/sky130_fd_sc_hd__or2_0.sch"`](https://github.com/sifferman/sky130_schematics/blob/main/schematics/or2/sky130_fd_sc_hd__or2_0.sch)
 

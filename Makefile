@@ -1,5 +1,5 @@
 
-REPO := efabless/skywater-pdk-libs-sky130_fd_sc_hd
+REPO := fossi-foundation/skywater-pdk-libs-sky130_fd_sc_hd
 
 SCHEMATICS := $(shell find schematics -name "*.sch")
 ALL_SVG_FILES := $(patsubst schematics/%.sch,svg/%.svg,$(SCHEMATICS))
