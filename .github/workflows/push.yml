@@ -57,9 +57,9 @@ jobs:
           python3 -m venv ciel-venv
           ciel-venv/bin/python3 -m pip install --upgrade --no-cache-dir ciel
           export PDK_ROOT=${{ env.tools }}/ciel-pdks
-          ciel-venv/bin/ciel ls-remote --pdk sky130
+          ciel-venv/bin/ciel ls-remote --pdk-family sky130
           # https://github.com/RTimothyEdwards/open_pdks/tree/0fe599b2afb6708d281543108caf8310912f54af
-          ciel-venv/bin/ciel enable --pdk sky130 0fe599b2afb6708d281543108caf8310912f54af
+          ciel-venv/bin/ciel enable --pdk-family sky130 0fe599b2afb6708d281543108caf8310912f54af
 
       - name: LVS
         run: |
