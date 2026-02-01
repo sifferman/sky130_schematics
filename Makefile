@@ -37,7 +37,7 @@ lvs/%.report: references/%.spice netlists/%.spice
 
 references/%.spice:
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/${REPO}/main/cells/$*.spice
+	wget -O $@ https://raw.githubusercontent.com/${REPO}/main/cells/$*.spice || (rm -f $@ && false)
 
 spice2sch/%.sch: references/%.spice
 	mkdir -p $(dir $@)
