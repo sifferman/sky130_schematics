@@ -6,5 +6,3 @@ if {[catch {set PDK_ROOT $env(PDK_ROOT)}]} {
 
 source $PDK_ROOT/sky130A/libs.tech/xschem/xschemrc
 set XSCHEM_START_WINDOW {}
-
-set netlist_type spice
