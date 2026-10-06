@@ -37,7 +37,7 @@ proc get_subckt_line {file} {
     # Replace newline+ with a space to join continuation lines.
     regsub -all {\n\+} $content {} content
 
-    if {[regexp -line {^\.subckt.*} $content match]} {
+    if {[regexp -nocase -line {^\.subckt.*} $content match]} {
         return $match
     } else {
         puts stderr "ERROR: .subckt not found"
@@ -46,8 +46,8 @@ proc get_subckt_line {file} {
 }
 
 # Ensure .subckt definitions match
-set ref_ports [get_subckt_line $REFERENCE_SPICE_FILE]
-set netlist_ports [get_subckt_line $XSCHEM_SPICE_FILE]
+set ref_ports [string tolower [get_subckt_line $REFERENCE_SPICE_FILE]]
+set netlist_ports [string tolower [get_subckt_line $XSCHEM_SPICE_FILE]]
 if {$ref_ports ne $netlist_ports} {
     puts stderr "ERROR: .subckt definitions do not match between \"$XSCHEM_SPICE_FILE\" and \"$REFERENCE_SPICE_FILE\""
     puts stderr " Expected: $ref_ports"
